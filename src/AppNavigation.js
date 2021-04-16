@@ -20,6 +20,8 @@ import PatientProfile from './component/PatientProfile';
 import Reports from './component/PatientProfile/Reports';
 import MedicineReminder from './component/PatientProfile/MedicineReminder';
 import UpcomingAppointment from './component/PatientProfile/UpcomingAppointment';
+import History from './component/PatientProfile/History';
+import VideoCallingAppointment from './component/PatientProfile/VideoCallingAppointment';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -135,6 +137,8 @@ const PatientStack = () => {
     <Stack.Navigator screenOptions={{headerShown: false}}>
       <Stack.Screen name="MedicineReminder" component={MedicineReminder} />
       <Stack.Screen name="PatientReports" component={Reports} />
+      <Stack.Screen name="History" component={History} />
+      <Stack.Screen name="VideoCallingAppointment" component={VideoCallingAppointment} />
       <Stack.Screen
         name="UpcomingAppointment"
         component={UpcomingAppointment}
