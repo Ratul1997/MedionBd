@@ -1,3 +1,7 @@
+/** 
+ name: VideoCallingAppointment
+ function: This is a  component for VideoCallingAppointment
+**/
 import React from 'react';
 import {View, Text} from 'react-native';
 import AllPurposeHeader from '../../../common/AllPurposeHeader';

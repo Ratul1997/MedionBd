@@ -1,3 +1,7 @@
+/** 
+ name: History
+ function: This is a  component for History
+**/
 import React, {useState} from 'react';
 import {View, Text, TouchableOpacity, StyleSheet} from 'react-native';
 import AllPurposeHeader from '../../../common/AllPurposeHeader';

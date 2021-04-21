@@ -1,3 +1,7 @@
+/** 
+ name: AppointMentsFooter
+ function: This is a component for AppointMentsFooter
+**/
 import React from 'react';
 import {View, Text, TouchableOpacity} from 'react-native';
 import normalization from '../../../constants/normalization';

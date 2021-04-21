@@ -1,3 +1,7 @@
+/** 
+ name: FileUpload
+ function: This is a  component for FileUpload
+**/
 import React from 'react';
 import {View, Text, TextInput, TouchableOpacity} from 'react-native';
 import COLORS from '../../../constants/COLORS';

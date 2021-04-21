@@ -1,3 +1,8 @@
+/** 
+ name: Appointment
+ function: This is a  component for Appointment
+**/
+
 import React, {useState} from 'react';
 import {View, Text, FlatList} from 'react-native';
 import normalization from '../../../../constants/normalization';

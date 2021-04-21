@@ -1,3 +1,8 @@
+/** 
+ name: ReferenceCode
+ function: This is a component for ReferenceCode
+**/
+
 import React from 'react';
 import {View, Text, TextInput, TouchableOpacity} from 'react-native';
 import normalization from '../../../../constants/normalization';

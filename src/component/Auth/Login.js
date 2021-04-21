@@ -1,26 +1,38 @@
+/** 
+ name: Login
+ function: This is a component for login
+**/
+
 import React, {useState} from 'react';
 import {
-  Button,
   View,
   Text,
   TextInput,
   Image,
   StyleSheet,
-  FlatList,
-  Modal,
   TouchableOpacity,
-  ScrollView,
   Dimensions,
 } from 'react-native';
+
+//Colors And Dynamic Screen
 import COLORS from '../../constants/COLORS';
 import normalization from '../../constants/normalization';
+
 export default function Login(props) {
+  /*
+
+  Getting properties from navigation
+
+  function-
+  applyButtonClick: for navigating to next Page
+  */
   const {applyButtonClick} = props;
 
   return (
+    // Mani View 
     <View>
       <Image
-        style={{margin: 25, alignSelf: 'center'}}
+        style={{margin: normalization(23), alignSelf: 'center'}}
         source={require('../../images/33.png')}
       />
       <Text
@@ -48,7 +60,7 @@ export default function Login(props) {
       <TouchableOpacity onPress={applyButtonClick} style={styles.logInButton}>
         <Text
           style={{
-            fontSize: normalization(13),
+            fontSize: normalization(14),
             color: COLORS.white,
             fontWeight: 'bold',
           }}>
@@ -61,7 +73,7 @@ export default function Login(props) {
           style={{
             marginStart: normalization(10),
             color: COLORS.textGrey,
-            fontSize: 16,
+            fontSize: normalization(13),
           }}>
           Don't have an account!{' '}
         </Text>
@@ -69,7 +81,7 @@ export default function Login(props) {
           style={{
             marginStart: normalization(10),
             color: COLORS.textlightBlue,
-            fontSize: 16,
+            fontSize: normalization(13),
           }}>
           Sign Up
         </Text>
@@ -85,16 +97,16 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     borderRadius: 10,
     borderColor: '#979A9A',
-    marginBottom: 15,
+    marginBottom: normalization(13),
   },
   logInButton: {
-    height: 50,
-    width: Dimensions.get('window').width * 0.92 - 60,
+    height: normalization(47),
+    width: Dimensions.get('window').width * 0.92 - normalization(57),
     backgroundColor: '#053871',
     borderRadius: 50,
     justifyContent: 'center',
     alignItems: 'center',
     elevation: 25,
-    marginBottom: 10,
+    marginBottom: normalization(7),
   },
 });

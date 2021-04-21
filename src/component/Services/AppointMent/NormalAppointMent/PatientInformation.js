@@ -1,17 +1,10 @@
+/** 
+ name: PatientInformation
+ function: This is a  component for PatientInformation
+**/
+
 import React, {useState} from 'react';
-import {
-  Button,
-  View,
-  Text,
-  TextInput,
-  Image,
-  StyleSheet,
-  FlatList,
-  Modal,
-  TouchableOpacity,
-  ScrollView,
-  Dimensions,
-} from 'react-native';
+import {View, Text, TextInput, StyleSheet} from 'react-native';
 
 import {Picker} from '@react-native-community/picker';
 import COLORS from '../../../../constants/COLORS';

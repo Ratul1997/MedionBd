@@ -1,3 +1,7 @@
+/** 
+ name: UpComingReminder
+ function: This is a  component for UpComingReminder
+**/
 import React from 'react';
 import {View, Text, FlatList} from 'react-native';
 import COLORS from '../../../constants/COLORS';

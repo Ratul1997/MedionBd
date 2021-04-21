@@ -1,3 +1,8 @@
+/** 
+ name: Filter
+ function: This is a component for Filter
+**/
+
 import * as React from 'react';
 import {
   View,

@@ -6,7 +6,7 @@
  * @flow strict-local
  */
 
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   SafeAreaView,
   ScrollView,
@@ -24,12 +24,16 @@ import {
 } from '@react-navigation/native';
 
 import AppNavigation from './src/AppNavigation';
+import SplashScreen from './src/SplashScreen';
 
 const App = () => {
+  const [isLoad, setIsload] = useState(false);
+
+
   return (
-    <NavigationContainer >
-      <AppNavigation />
-    </NavigationContainer>
+    <NavigationContainer>
+        <AppNavigation />
+      </NavigationContainer>
   );
 };
 

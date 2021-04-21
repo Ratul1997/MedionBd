@@ -1,19 +1,27 @@
+/** 
+ name: CallingOptions
+ function: This is a  component for CallingOptions
+**/
 import React from 'react';
 import {View, Text, TouchableOpacity, Image} from 'react-native';
+//Colors And Dynamic Screen
 import normalization from '../../../constants/normalization';
 import COLORS from '../../../constants/COLORS';
+//Vector Icons
 import FontIso from 'react-native-vector-icons/Fontisto';
 import IonIcons from 'react-native-vector-icons/Ionicons';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 export default function CallingOptions() {
   return (
+    // Main View 
     <View
       style={{
         marginHorizontal: normalization(15),
         width: '80%',
-        // justifyContent: 'center',
         alignSelf:'center',
       }}>
+
+      {/* For Phone Call */}
       <TouchableOpacity
         style={{
           marginBottom: normalization(10),
@@ -28,6 +36,7 @@ export default function CallingOptions() {
           padding: normalization(5),
           justifyContent: 'space-evenly',
         }}>
+        {/* Doctor Icon */}
         <FontAwesome name="user-md" color="#029128" size={normalization(25)} />
         <Text
           style={{
@@ -49,9 +58,12 @@ export default function CallingOptions() {
             justifyContent: 'center',
             alignItems: 'center',
           }}>
+          {/* Call Icon */}
           <IonIcons name="call-sharp" size={normalization(12)} color="white" />
         </View>
       </TouchableOpacity>
+
+       {/* For Doctor AppointMent */}
       <TouchableOpacity
         style={{
           marginBottom: normalization(10),
@@ -66,6 +78,7 @@ export default function CallingOptions() {
           padding: normalization(5),
           justifyContent: 'space-evenly',
         }}>
+        {/* Doctor Icon */}
         <FontIso name="doctor" color="#023E73" size={normalization(25)} />
         <Text
           style={{
@@ -87,6 +100,7 @@ export default function CallingOptions() {
             justifyContent: 'center',
             alignItems: 'center',
           }}>
+          {/* Vide Call Icon */}
           <FontAwesome
             name="video-camera"
             size={normalization(10)}

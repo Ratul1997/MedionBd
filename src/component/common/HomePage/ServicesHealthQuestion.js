@@ -1,21 +1,35 @@
+/** 
+ name: ServicesHealthQuestion
+ function: This is a  component for ServicesHealthQuestion
+**/
+
 import React from 'react';
-import {
-  View,
-  Text,
-  StyleSheet,
-  FlatList,
-  TouchableOpacity,
-  Dimensions,
-  Image,
-} from 'react-native';
+import {View, Text, FlatList} from 'react-native';
+//Colors And Dynamic Screen
 import COLORS from '../../../constants/COLORS';
 import normalization from '../../../constants/normalization';
+
 import DataItem from './DataItem';
 
 export default function ServicesHealthQuestion(props) {
+  /*
+  Getting properties from navigation
+
+  variables-
+  navigation: navigation properties
+  data: service data (Array of Objects)
+  title: service name (string)
+  */
   const {data, title, navigation} = props;
+
+  /**
+   *
+   * @name: renderItem
+   * @function: rendering DataItems
+   */
   const renderItem = ({item, index}) => {
     return (
+      //Render an Item of Data
       <DataItem item={item} screenName={item.navPage} navigation={navigation} />
     );
   };
@@ -27,6 +41,7 @@ export default function ServicesHealthQuestion(props) {
         paddingEnd: normalization(10),
       }}>
       <View style={{flexDirection: 'row', width: '100%', overflow: 'hidden'}}>
+        {/* Service Name */}
         <Text
           style={{
             fontSize: normalization(18),
@@ -36,6 +51,8 @@ export default function ServicesHealthQuestion(props) {
           }}>
           {title}
         </Text>
+
+        {/* Straigth Line View */}
         <View
           style={{
             alignSelf: 'center',
@@ -47,7 +64,7 @@ export default function ServicesHealthQuestion(props) {
           }}
         />
       </View>
-
+      {/* FlatList */}
       <FlatList
         data={data}
         showsVerticalScrollIndicator={false}

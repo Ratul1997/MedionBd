@@ -1,9 +1,22 @@
+/** 
+ name: VideoCallingItem
+ function: This is a  component for VideoCallingItem
+**/
 import React from 'react';
 import {View, Text} from 'react-native';
+//Colors And Dynamic Screen
 import normalization from '../../../constants/normalization';
 import COLORS from '../../../constants/COLORS';
 
 export default function VideoCallingItem(props) {
+  /*
+  Getting properties from navigation
+
+  variables-
+  item: Video Call Item (Object)
+  backgroundColor: color of backGround
+  */
+
   const {item, backgroundColor} = props;
   return (
     <View

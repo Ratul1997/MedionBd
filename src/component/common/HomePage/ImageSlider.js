@@ -1,3 +1,7 @@
+/** 
+ name: ImageSlider
+ function: This is a  component for ImageSlider
+**/
 import * as React from 'react';
 import {
   Text,
@@ -8,6 +12,8 @@ import {
   Image,
 } from 'react-native';
 import Carousel, {Pagination} from 'react-native-snap-carousel';
+
+//Colors And Dynamic Screen
 import COLORS from '../../../constants/COLORS';
 import normalization from '../../../constants/normalization';
 

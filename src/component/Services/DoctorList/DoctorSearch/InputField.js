@@ -1,3 +1,7 @@
+/** 
+ name: InputField
+ function: This is a component for Custom TextInput
+**/
 import * as React from 'react';
 import {
   Button,

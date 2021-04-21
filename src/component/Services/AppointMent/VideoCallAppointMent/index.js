@@ -1,3 +1,7 @@
+/** 
+ name: VideoCallAppointMent
+ function: This is a component for VideoCallAppointMent
+**/
 import React, {useState} from 'react';
 import {View, Text, ScrollView, TouchableOpacity} from 'react-native';
 import AllPurposeHeader from '../../../../common/AllPurposeHeader';
@@ -41,7 +45,7 @@ export default function VideoCallAppointMent(props) {
 
   const [selectedId, setSelectedId] = useState(null);
   const onBackNavigate = () => {
-    navigation.goBack();
+    navigation.pop();
   };
   const onPressCloseModal = () => {
     setModalVisible(false);
@@ -52,7 +56,7 @@ export default function VideoCallAppointMent(props) {
   };
 
   const applyButtonClick = () => {
-    navigation.navigate('VideoCallProfileInformation');
+    navigation.replace('VideoCallProfileInformation');
   };
 
   const renderItem = ({item}) => {

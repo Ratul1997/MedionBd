@@ -1,3 +1,7 @@
+/** 
+ name: DoctorSearch
+ function: This is a component for DoctorSearch
+**/
 import React from 'react';
 import {View, Text, TouchableOpacity, Dimensions} from 'react-native';
 import COLORS from '../../../../constants/COLORS';

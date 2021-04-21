@@ -1,13 +1,10 @@
+/** 
+ name: DataItem
+ function: This is a  component for DataItem
+**/
 import React from 'react';
-import {
-  View,
-  Text,
-  StyleSheet,
-  FlatList,
-  TouchableOpacity,
-  Dimensions,
-  Image,
-} from 'react-native';
+import {View, Text, TouchableOpacity, Dimensions, Image} from 'react-native';
+//Colors And Dynamic Screen
 import COLORS from '../../../constants/COLORS';
 import normalization from '../../../constants/normalization';
 

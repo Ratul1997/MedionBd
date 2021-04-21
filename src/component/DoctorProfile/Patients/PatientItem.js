@@ -1,10 +1,24 @@
+/** 
+ name: PatientItem
+ function: This is a  component for PatientItem
+**/
+
 import React from 'react';
 import {View, Text} from 'react-native';
+//Colors And Dynamic Screen
 import COLORS from '../../../constants/COLORS';
 import normalization from '../../../constants/normalization';
 
 export default function PatientItem(props) {
+  /*
+  Getting properties from navigation
+
+  variables-
+  item: patient Details (Object)
+  */
+
   const {item} = props;
+  
   return (
     <View
       style={{

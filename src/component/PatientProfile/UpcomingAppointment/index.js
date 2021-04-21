@@ -1,3 +1,8 @@
+/** 
+ name: UpcomingAppointment
+ function: This is a  component for UpcomingAppointment
+**/
+
 import React from 'react';
 import {View, Text} from 'react-native';
 import AllPurposeHeader from '../../../common/AllPurposeHeader';

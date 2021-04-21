@@ -1,3 +1,7 @@
+/** 
+ name: DoctorItem
+ function: This is a component for DoctorItem
+**/
 import * as React from 'react';
 import {
   Button,
@@ -119,7 +123,7 @@ export default function DoctorItem(props) {
                 fontSize: normalization(12),
                 fontWeight: 'bold',
               }}>
-              Get Appointment
+              Appointment
             </Text>
           </TouchableOpacity>
           <TouchableOpacity

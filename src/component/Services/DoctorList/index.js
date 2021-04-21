@@ -1,3 +1,8 @@
+/** 
+ name: DoctorList
+ function: This is a component for DoctorList
+**/
+
 import React from 'react';
 import {View, Text, TouchableOpacity, Dimensions, FlatList} from 'react-native';
 import COLORS from '../../../constants/COLORS';
@@ -19,7 +24,11 @@ export default function DoctorList(props) {
   };
   return (
     <View style={{flex: 1, backgroundColor: '#F5F5F5'}}>
-      <AllPurposeHeader title="Doctors" onBackNavigate={onBackNavigate} filter />
+      <AllPurposeHeader
+        title="Doctors"
+        onBackNavigate={onBackNavigate}
+        filter
+      />
       {/**search part */}
 
       <DoctorSearch />
@@ -54,11 +63,7 @@ export default function DoctorList(props) {
           </View>
         )}
         renderItem={({item, index}) => (
-          <DoctorItem
-            item={item}
-            index = {index}
-            navigation={navigation}
-          />
+          <DoctorItem item={item} index={index} navigation={navigation} />
         )}
       />
     </View>

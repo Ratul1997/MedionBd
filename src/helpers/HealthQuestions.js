@@ -7,7 +7,7 @@ const HealthQuestions = [
   {
     image: require('../images/ViewFeed.png'),
     text: 'View Feed',
-    navPage: 'NewsFeed',
+    navPage: 'Feed',
   },
 ];
 

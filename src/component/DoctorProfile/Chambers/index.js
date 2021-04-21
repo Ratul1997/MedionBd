@@ -1,11 +1,29 @@
+/** 
+ name: Chambers
+ function: This is a  component for Chambers
+**/
 import React from 'react';
 import {View, Text, FlatList} from 'react-native';
+
+//Colors And Dynamic Screen
 import normalization from '../../../constants/normalization';
 import COLORS from '../../../constants/COLORS';
 
 export default function Chambers(props) {
+  /*
+  Getting properties from navigation
+
+  variables-
+  chamberData: chambers list of a doctor (Array of Object)
+  */
   const {chamberData} = props;
-  const ChamberItems = ({item}) => {
+
+  /**
+   * @name: renderItem
+   * @function: rendering the chamber Data
+   */
+
+  const renderItem = ({item}) => {
     return (
       <View
         style={{
@@ -38,7 +56,7 @@ export default function Chambers(props) {
         data={chamberData}
         horizontal={true}
         showsHorizontalScrollIndicator={false}
-        renderItem={ChamberItems}
+        renderItem={renderItem}
         listKey={(item, index) => 'D' + index.toString()}
       />
     </View>

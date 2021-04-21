@@ -1,3 +1,8 @@
+/** 
+ name: Order
+ function: This is a  component for Order
+**/
+
 import React from 'react';
 import {View, Text, StyleSheet, FlatList} from 'react-native';
 import COLORS from '../../../../constants/COLORS';

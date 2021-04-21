@@ -16,6 +16,8 @@ target 'MedionBd' do
 
   pod 'RNScreens', :path => '../node_modules/react-native-screens'
 
+  pod 'RNCCheckbox', :path => '../node_modules/@react-native-community/checkbox'
+
   target 'MedionBdTests' do
     inherit! :complete
     # Pods for testing

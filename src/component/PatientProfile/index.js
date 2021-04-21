@@ -1,3 +1,7 @@
+/** 
+ name: PatientProfile
+ function: This is a  component for PatientProfile
+**/
 import React from 'react';
 import {View, Text, FlatList, TouchableOpacity, Image} from 'react-native';
 import PatientProfileOptions from '../../helpers/PatientProfileOptions';

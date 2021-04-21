@@ -1,3 +1,8 @@
+/** 
+ name: NextAppointMent
+ function: This is a  component for NextAppointMent
+**/
+
 import React from 'react';
 import {View, Text, FlatList, TouchableOpacity} from 'react-native';
 import COLORS from '../../../constants/COLORS';

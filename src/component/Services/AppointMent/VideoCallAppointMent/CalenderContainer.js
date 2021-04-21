@@ -1,3 +1,7 @@
+/** 
+ name: CalenderContainer
+ function: This is a  component for CalenderContainer
+**/
 import React from 'react';
 import {View, Text} from 'react-native';
 import AntDesign from 'react-native-vector-icons/AntDesign';

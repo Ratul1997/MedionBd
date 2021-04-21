@@ -1,13 +1,31 @@
+/** 
+ name: VideoCallingSchedule
+ function: This is a  component for VideoCallingSchedule
+**/
+
 import React, {useState} from 'react';
 import {View, Text, FlatList} from 'react-native';
+//Colors And Dynamic Screen
 import normalization from '../../../constants/normalization';
 import COLORS from '../../../constants/COLORS';
+
 import VideoCallingItem from './VideoCallingItem';
 
 export default function VideoCallingSchedule(props) {
+  /*
+  Getting properties from navigation
+
+  variables-
+  videoCallingInfo: videoCallingInfo of a Doctor (Array of Objects)
+  */
   const {videoCallingInfo} = props;
 
   const [scheduleList, setScheduleList] = useState(false);
+  
+  /**
+   * @name: renderItem
+   * @function: rendering VideoCalling Item 
+   */
   const renderItem = ({item}) => {
     const backgroundColor = item.key % 2 === 0 ? '#BCE5AB' : '#B4D3FC';
     if (!scheduleList && item.key < 4) {

@@ -3,6 +3,7 @@ import {View, Text} from 'react-native';
 import {createStackNavigator} from '@react-navigation/stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {createDrawerNavigator} from '@react-navigation/drawer';
+import {createMaterialBottomTabNavigator} from '@react-navigation/material-bottom-tabs';
 import {useTheme} from '@react-navigation/native';
 
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -22,10 +23,18 @@ import MedicineReminder from './component/PatientProfile/MedicineReminder';
 import UpcomingAppointment from './component/PatientProfile/UpcomingAppointment';
 import History from './component/PatientProfile/History';
 import VideoCallingAppointment from './component/PatientProfile/VideoCallingAppointment';
+import AskQuestion from './component/HealthQuestions/AskQuestion';
+import Feed from './component/HealthQuestions/Feed';
+import HealthCheckUp from './component/Services/HealthCheckup';
+import HealthCheckUpDetails from './component/Services/HealthCheckup/HealthCheckUpDetails';
+import Blog from './component/Blog';
+import BlogDetails from './component/Blog/BlogDetails';
+import SplashScreen from './SplashScreen';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 const Drawer = createDrawerNavigator();
+const MaterialTab = createMaterialBottomTabNavigator();
 
 const Home = () => {
   const {colors} = useTheme();
@@ -64,39 +73,50 @@ const Home = () => {
   );
 };
 
-const BottomTab = () => {
+const MaterialTabNavigator = () => {
   return (
-    <Tab.Navigator
-      screenOptions={({route}) => ({
-        tabBarIcon: ({focused, color, size}) => {
-          let iconName;
-          let iconColor;
-
-          if (route.name === 'Home') {
-            iconName = 'ios-home';
-            iconColor = focused ? COLORS.iconColor : COLORS.textGrey;
-          } else if (route.name === 'Doctor Chat') {
-            iconName = 'md-chatbox';
-            iconColor = focused ? COLORS.iconColor : COLORS.textGrey;
-          } else if (route.name === 'Profile') {
-            iconName = 'person';
-            iconColor = focused ? COLORS.iconColor : COLORS.textGrey;
-          }
-
-          // You can return any component that you like here!
-          return <Ionicons name={iconName} size={size} color={iconColor} />;
-        },
-      })}
-      tabBarOptions={{
-        activeTintColor: '#547896',
-        inactiveTintColor: 'gray',
-        tabStyle: {elevation: 20, backgroundColor: '#fff'},
-        labelStyle: {fontSize: normalization(11)},
-      }}>
-      <Tab.Screen name="Home" component={HomePage} />
-      <Tab.Screen name="Doctor Chat" component={Home} />
-      <Tab.Screen name="Profile" component={PatientProfile} />
-    </Tab.Navigator>
+    <MaterialTab.Navigator
+      shifting={true}
+      sceneAnimationEnabled={false}
+      initialRouteName="Home"
+      activeColor={COLORS.iconColor}
+      inactiveColor="#AED6F1"
+      barStyle={{backgroundColor: '#fff'}}>
+      <MaterialTab.Screen
+        name="Home"
+        component={HomePage}
+        options={{
+          tabBarLabel: 'Home',
+          tabBarIcon: ({color}) => (
+            <Ionicons name="ios-home" size={normalization(22)} color={color} />
+          ),
+        }}
+      />
+      <MaterialTab.Screen
+        name="Doctor Chat"
+        component={Home}
+        options={{
+          tabBarLabel: 'Doctor Chat',
+          tabBarIcon: ({color}) => (
+            <Ionicons
+              name="md-chatbox"
+              size={normalization(22)}
+              color={color}
+            />
+          ),
+        }}
+      />
+      <MaterialTab.Screen
+        name="Profile"
+        component={PatientProfile}
+        options={{
+          tabBarLabel: 'Profile',
+          tabBarIcon: ({color}) => (
+            <Ionicons name="person" size={normalization(22)} color={color} />
+          ),
+        }}
+      />
+    </MaterialTab.Navigator>
   );
 };
 
@@ -105,7 +125,7 @@ const HomeStack = () => {
     <Stack.Navigator
       screenOptions={{headerShown: false}}
       initialRouteName="Tabbar">
-      <Stack.Screen name="TabBar" component={BottomTab} />
+      <Stack.Screen name="TabBar" component={MaterialTabNavigator} />
       <Stack.Screen name="NormalAppointment" component={NormalAppointMent} />
       <Stack.Screen
         name="VideoCallAppointMent"
@@ -117,7 +137,14 @@ const HomeStack = () => {
       />
       <Stack.Screen name="Confirmation" component={Confirmation} />
       <Stack.Screen name="DoctorList" component={DoctorList} />
+      <Stack.Screen name="AskQuestion" component={AskQuestion} />
       <Stack.Screen name="Filter" component={Filter} />
+      <Stack.Screen name="Feed" component={Feed} />
+      <Stack.Screen name="HealthCheckUp" component={HealthCheckUp} />
+      <Stack.Screen
+        name="HealthCheckUpDetails"
+        component={HealthCheckUpDetails}
+      />
     </Stack.Navigator>
   );
 };
@@ -138,7 +165,10 @@ const PatientStack = () => {
       <Stack.Screen name="MedicineReminder" component={MedicineReminder} />
       <Stack.Screen name="PatientReports" component={Reports} />
       <Stack.Screen name="History" component={History} />
-      <Stack.Screen name="VideoCallingAppointment" component={VideoCallingAppointment} />
+      <Stack.Screen
+        name="VideoCallingAppointment"
+        component={VideoCallingAppointment}
+      />
       <Stack.Screen
         name="UpcomingAppointment"
         component={UpcomingAppointment}
@@ -158,11 +188,27 @@ const LogInStack = () => {
     </Stack.Navigator>
   );
 };
+const BlogStack = () => {
+  return (
+    <Stack.Navigator
+      initialRouteName="HomeStack"
+      screenOptions={{headerShown: false}}>
+      <Drawer.Screen name="Blog" component={Blog} />
+      <Stack.Screen name="BlogDetails" component={BlogDetails} />
+    </Stack.Navigator>
+  );
+};
 
-export default function AppNavigation() {
+const DrawerNav = () => {
   return (
     <Drawer.Navigator>
-      <Drawer.Screen name="Tab" component={LogInStack} />
+      <Drawer.Screen name="Home" component={LogInStack} />
+      <Drawer.Screen name="Blogs" component={BlogStack} />
+      <Drawer.Screen name="Patient Profile" component={PatientProfile} />
+      <Drawer.Screen name="Doctor Profile" component={DoctorProfile} />
     </Drawer.Navigator>
   );
+};
+export default function AppNavigation() {
+  return <DrawerNav />;
 }

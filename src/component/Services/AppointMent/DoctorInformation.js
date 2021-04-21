@@ -1,3 +1,8 @@
+/** 
+ name: DoctorInformation
+ function: This is a component for DoctorInformation
+**/
+
 import React from 'react';
 import {View, Text, Image} from 'react-native';
 import AllPurposeHeader from '../../../common/AllPurposeHeader';

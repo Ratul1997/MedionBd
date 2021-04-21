@@ -1,3 +1,8 @@
+/** 
+ name: NormalAppointMent
+ function: This is a  component for NormalAppointMent
+**/
+
 import React, {useState} from 'react';
 import {View, Text, ScrollView} from 'react-native';
 import AllPurposeHeader from '../../../../common/AllPurposeHeader';
@@ -13,7 +18,7 @@ export default function NormalAppointMent(props) {
   const [modalVisible, setModalVisible] = useState(false);
 
   const onBackNavigate = () => {
-    navigation.goBack();
+    navigation.pop();
   };
 
   const onPressCloseModal = () => {
@@ -37,7 +42,7 @@ export default function NormalAppointMent(props) {
         <Login applyButtonClick={applyButtonClick} />
       </LoginModal>
       <ScrollView>
-        <DoctorInformation accountInformation/>
+        <DoctorInformation accountInformation />
         <PatientInformation />
         <AppointMentsFooter title="Confirm Schedule" onConfirm={onConfirm} />
       </ScrollView>

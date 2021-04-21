@@ -1,3 +1,7 @@
+/** 
+ name: PreviousFiles
+ function: This is a  component for PreviousFiles
+**/
 import React, {useState} from 'react';
 import {View, Text, TouchableOpacity, FlatList} from 'react-native';
 import normalization from '../../../../constants/normalization';

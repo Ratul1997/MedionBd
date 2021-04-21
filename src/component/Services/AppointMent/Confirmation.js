@@ -1,13 +1,12 @@
+/** 
+ name: Confirmation
+ function: This is a component for Confirmation
+**/
 import React, {useState} from 'react';
 import {
   Button,
   View,
   Text,
-  TextInput,
-  Image,
-  StyleSheet,
-  FlatList,
-  Modal,
   TouchableOpacity,
   ScrollView,
   Dimensions,
@@ -24,7 +23,7 @@ export default function Confirmation(props) {
   return (
     <View style={{flex: 1, backgroundColor: COLORS.DoctorAppnt_Background}}>
       <TouchableOpacity
-        onPress={() => navigation.navigate('Home')}
+        onPress={() => navigation.goBack()}
         style={{flex: 0.1, padding: 15}}>
         <AntDesign name="close" size={30} color={COLORS.doctorListHeader} />
       </TouchableOpacity>

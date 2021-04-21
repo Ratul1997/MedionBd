@@ -1,22 +1,42 @@
+/** 
+ name: DoctorProfile
+ function: This is a  component for DoctorProfile
+**/
+
 import React, {useState} from 'react';
-import {View, Text, FlatList, TouchableOpacity, Image} from 'react-native';
-import AllPurposeHeader from '../../common/AllPurposeHeader';
-import VirtualizedView from '../../common/VirtualizedView';
+import {View, Text, Image} from 'react-native';
+//Colors And Dynamic Screen
 import COLORS from '../../constants/COLORS';
 import normalization from '../../constants/normalization';
-import AntDesign from 'react-native-vector-icons/AntDesign';
+
+import AllPurposeHeader from '../../common/AllPurposeHeader';
+import VirtualizedView from '../../common/VirtualizedView';
 import Chambers from './Chambers';
 import DoctorProfileData from '../../helpers/DummyData/DoctorProfileData';
 import VideoCallingSchedule from './VideoCallingSchedule';
 import Patients from './Patients';
 export default function DoctorProfile(props) {
-  const {ChamberList, VideoCallingInfo, PatientList} = DoctorProfileData;
+  /*
+  Getting properties from navigation
+
+  variables-
+  navigation: navigation properties
+  route: routing properties
+  
+  */
+
   const {navigation, route} = props;
-  const [scheduleList, setScheduleList] = useState(false);
-  const [ShowPatientList, setShowPatientList] = useState(false);
+  // Data of DoctorProfiles
+  const {ChamberList, VideoCallingInfo, PatientList} = DoctorProfileData;
+
+  /**
+   * @name: onBackNavigate
+   * @function: navigating Back
+   */
   const onBackNavigate = () => {
     navigation.goBack();
   };
+  
   return (
     <View style={{flex: 1, backgroundColor: COLORS.white}}>
       {route.params && (

@@ -1,3 +1,8 @@
+/** 
+ name: MedicineReminder
+ function: This is a  component for MedicineReminder
+**/
+
 import React from 'react';
 import {View, Text} from 'react-native';
 import AllPurposeHeader from '../../../common/AllPurposeHeader';

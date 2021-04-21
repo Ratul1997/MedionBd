@@ -1,3 +1,8 @@
+/** 
+ name: VideoCallPatientInformation
+ function: This is a component for VideoCallPatientInformation
+**/
+
 import React, {useState} from 'react';
 import {
   Button,

@@ -1,3 +1,8 @@
+/** 
+ name: NextReminder
+ function: This is a  component for NextReminder
+**/
+
 import React from 'react';
 import {View, Text} from 'react-native';
 import COLORS from '../../../constants/COLORS';
