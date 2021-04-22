@@ -23,12 +23,12 @@ import {
   useTheme,
 } from '@react-navigation/native';
 
+
 import AppNavigation from './src/AppNavigation';
 import SplashScreen from './src/SplashScreen';
 
 const App = () => {
   const [isLoad, setIsload] = useState(false);
-
 
   return (
     <NavigationContainer>

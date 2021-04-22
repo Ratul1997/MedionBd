@@ -1741,6 +1741,13 @@ aws4@^1.8.0:
   resolved "https://registry.yarnpkg.com/aws4/-/aws4-1.11.0.tgz#d61f46d83b2519250e2784daf5b09479a8b41c59"
   integrity sha512-xh1Rl34h6Fi1DC2WWKfxUTVqRsNnr6LsKz2+hfwDxQJWmrx8+c7ylaqBMcHfl1U1r2dsifOvKX3LQuLNZ+XSvA==
 
+axios@^0.21.1:
+  version "0.21.1"
+  resolved "https://registry.yarnpkg.com/axios/-/axios-0.21.1.tgz#22563481962f4d6bde9a76d516ef0e5d3c09b2b8"
+  integrity sha512-dKQiRHxGD9PPRIUNIWvZhPTPpl1rf/OxTYKsqKUDjBwYylTvV7SjSHJb9ratfyzM6wCdLCOYLzs73qpg5c4iGA==
+  dependencies:
+    follow-redirects "^1.10.0"
+
 babel-core@^7.0.0-bridge.0:
   version "7.0.0-bridge.0"
   resolved "https://registry.yarnpkg.com/babel-core/-/babel-core-7.0.0-bridge.0.tgz#95a492ddd90f9b4e9a4a1da14eb335b87b634ece"
@@ -2536,6 +2543,11 @@ domexception@^2.0.1:
   dependencies:
     webidl-conversions "^5.0.0"
 
+dotenv@^8.0.0:
+  version "8.2.0"
+  resolved "https://registry.yarnpkg.com/dotenv/-/dotenv-8.2.0.tgz#97e619259ada750eea3e4ea3e26bceea5424b16a"
+  integrity sha512-8sJ78ElpbDJBHNeBzUbUVLsqKdccaa/BXF1uPTw3GrvQTBgrQrtObr2mUrE38vzYd8cEv+m/JBfDLioYcfXoaw==
+
 ecc-jsbn@~0.1.1:
   version "0.1.2"
   resolved "https://registry.yarnpkg.com/ecc-jsbn/-/ecc-jsbn-0.1.2.tgz#3a83a904e54353287874c564b7549386849a98c9"
@@ -3129,6 +3141,11 @@ flow-parser@^0.121.0:
   version "0.121.0"
   resolved "https://registry.yarnpkg.com/flow-parser/-/flow-parser-0.121.0.tgz#9f9898eaec91a9f7c323e9e992d81ab5c58e618f"
   integrity sha512-1gIBiWJNR0tKUNv8gZuk7l9rVX06OuLzY9AoGio7y/JT4V1IZErEMEq2TJS+PFcw/y0RshZ1J/27VfK1UQzYVg==
+
+follow-redirects@^1.10.0:
+  version "1.13.3"
+  resolved "https://registry.yarnpkg.com/follow-redirects/-/follow-redirects-1.13.3.tgz#e5598ad50174c1bc4e872301e82ac2cd97f90267"
+  integrity sha512-DUgl6+HDzB0iEptNQEXLx/KhTmDb8tZUHSeLqpnjpknR70H0nC2t9N73BK6fN4hOvJ84pKlIQVQ4k5FFlBedKA==
 
 for-in@^1.0.2:
   version "1.0.2"
@@ -5666,6 +5683,11 @@ react-is@^16.13.0, react-is@^16.13.1, react-is@^16.7.0, react-is@^16.8.1:
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.13.1.tgz#789729a4dc36de2999dc156dd6c1d9c18cea56a4"
   integrity sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==
 
+react-native-agora@^3.3.3:
+  version "3.3.3"
+  resolved "https://registry.yarnpkg.com/react-native-agora/-/react-native-agora-3.3.3.tgz#425aed2ed05c6528049919e2ad1bae1e8549c581"
+  integrity sha512-EiPvqn3vPoTu8D+xk21MRRbyAauYmBezJ9bsmyXTYKd7fb9C7eyyYb9QZ82KmXBLxjuzu3T7I03a1uM/wIztqA==
+
 react-native-animated-splash-screen@^2.0.5:
   version "2.0.5"
   resolved "https://registry.yarnpkg.com/react-native-animated-splash-screen/-/react-native-animated-splash-screen-2.0.5.tgz#5dcfafc2841a8b0636662eaf6980e791d9acc7e1"
@@ -5705,6 +5727,13 @@ react-native-datepicker@^1.7.2:
   integrity sha1-WNCCJZGgrJsyq6CCZQIioO4pZp0=
   dependencies:
     moment "^2.22.0"
+
+react-native-dotenv@^2.5.5:
+  version "2.5.5"
+  resolved "https://registry.yarnpkg.com/react-native-dotenv/-/react-native-dotenv-2.5.5.tgz#5450fe79859f8553e893129d9fccc855cd38ecd9"
+  integrity sha512-ODaFNUX52ZYfBLJ8WSEm87nv+HrwxeEoZchuwsPyEWwsC4ARRhklfsKTf1dg09UpPS31zx5IUV431fLvcepCsA==
+  dependencies:
+    dotenv "^8.0.0"
 
 react-native-dropdown-picker@^4.0.9:
   version "4.0.9"

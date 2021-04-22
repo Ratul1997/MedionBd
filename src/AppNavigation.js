@@ -30,9 +30,9 @@ import HealthCheckUpDetails from './component/Services/HealthCheckup/HealthCheck
 import Blog from './component/Blog';
 import BlogDetails from './component/Blog/BlogDetails';
 import SplashScreen from './SplashScreen';
+import VideoCall from './component/VideoCall';
 
 const Stack = createStackNavigator();
-const Tab = createBottomTabNavigator();
 const Drawer = createDrawerNavigator();
 const MaterialTab = createMaterialBottomTabNavigator();
 
@@ -206,6 +206,7 @@ const DrawerNav = () => {
       <Drawer.Screen name="Blogs" component={BlogStack} />
       <Drawer.Screen name="Patient Profile" component={PatientProfile} />
       <Drawer.Screen name="Doctor Profile" component={DoctorProfile} />
+      <Drawer.Screen name="Video Call" component={VideoCall} />
     </Drawer.Navigator>
   );
 };
