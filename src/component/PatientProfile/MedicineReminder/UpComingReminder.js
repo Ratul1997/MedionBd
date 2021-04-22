@@ -4,11 +4,20 @@
 **/
 import React from 'react';
 import {View, Text, FlatList} from 'react-native';
+//Colors And Dynamic Screen
 import COLORS from '../../../constants/COLORS';
 import normalization from '../../../constants/normalization';
 
 export default function UpComingReminder(props) {
+    /*
+  Getting properties from navigation
+
+  variables-
+  medicine: medicine Data (Arrays of Object)
+  */
   const {medicine} = props;
+
+  // rendering Items of Medicines
   const renderItem = ({item}) => {
     return (
       <View
@@ -58,5 +67,6 @@ export default function UpComingReminder(props) {
       </View>
     );
   };
+  //render Main View
   return <FlatList data={medicine} renderItem={renderItem} />;
 }

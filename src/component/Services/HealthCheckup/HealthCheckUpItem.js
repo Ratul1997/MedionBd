@@ -4,14 +4,25 @@
 **/
 import React from 'react';
 import {View, Text, TouchableOpacity, Image, Dimensions} from 'react-native';
+//Colors And Dynamic Screens
 import COLORS from '../../../constants/COLORS';
 import normalization from '../../../constants/normalization';
-
+//Width of Window
 const WIDTH = Dimensions.get('window').width;
-
+//mew Width of Window
 const newWidth = WIDTH * 0.4;
 export default function HealthCheckUpItem(props) {
+  /*
+  Getting properties from navigation
+
+  variables-
+  item: HealthCheckUpItem data (Object)
+
+  functions-
+  onNavigate- passing from parent Component
+  */
   const {item, onNavigate} = props;
+
   return (
     <TouchableOpacity
       onPress={onNavigate}

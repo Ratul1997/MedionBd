@@ -4,21 +4,35 @@
 **/
 import React from 'react';
 import {View, Text, FlatList, TouchableOpacity, Image} from 'react-native';
-import PatientProfileOptions from '../../helpers/PatientProfileOptions';
+//Colors And Dynamic Screen
 import COLORS from '../../constants/COLORS';
 import normalization from '../../constants/normalization';
 
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import VirtualizedView from '../../common/VirtualizedView';
+
 import PatientProfileData from '../../helpers/DummyData/PatientProfileData';
+import PatientProfileOptions from '../../helpers/PatientProfileOptions';
 
 export default function PatientProfile(props) {
+  /*
+  Getting properties from navigation
+
+  variables-
+  navigation: navigation properties
+  */
   const {navigation} = props;
+  /**
+   * @name: onClickForNavigate
+   * @function: navigate To patientStack according to individual Item
+   */
   const onClickForNavigate = navTo => () => {
     navigation.navigate('PatientStack', {
       screen: navTo,
     });
   };
+
+  //rendering Items of PatientProfile Options
   const renderItem = ({item}) => {
     const borderBottomWidth = item.key === '8' ? 0 : 0.8;
     return (
@@ -43,6 +57,8 @@ export default function PatientProfile(props) {
       </TouchableOpacity>
     );
   };
+
+  //render Main View
   return (
     <View style={{flex: 1, backgroundColor: COLORS.DoctorAppnt_Background}}>
       <VirtualizedView>

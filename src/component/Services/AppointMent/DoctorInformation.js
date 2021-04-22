@@ -5,16 +5,19 @@
 
 import React from 'react';
 import {View, Text, Image} from 'react-native';
-import AllPurposeHeader from '../../../common/AllPurposeHeader';
-import VirtualizedView from '../../../common/VirtualizedView';
+//Colors And Dynamic Screen
 import COLORS from '../../../constants/COLORS';
 import normalization from '../../../constants/normalization';
 
 export default function DoctorInformation(props) {
-  const {navigation, accountInformation} = props;
-  const onBackNavigate = () => {
-    navigation.goBack();
-  };
+  /*
+  Getting properties from navigation
+
+  variables-
+  accountInformation: accountInformation of Doctor
+  */  
+  const {accountInformation} = props;
+  //render Main View
   return (
     <>
       <View style={{justifyContent: 'center', alignItems: 'center'}}>

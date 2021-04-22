@@ -5,11 +5,13 @@
 
 import React from 'react';
 import {View, Text} from 'react-native';
+//Colors And Dynamic Screen
 import COLORS from '../../../constants/COLORS';
 import normalization from '../../../constants/normalization';
-
+//Vector Icons
 import Ionicons from 'react-native-vector-icons/Ionicons';
 export default function NextReminder() {
+  //render View
   return (
     <>
       <Text

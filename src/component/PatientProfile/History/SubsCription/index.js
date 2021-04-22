@@ -4,12 +4,16 @@
 **/
 import React from 'react';
 import {View, Text, FlatList, StyleSheet} from 'react-native';
+//Colors And Dynamic Screen
 import normalization from '../../../../constants/normalization';
 import COLORS from '../../../../constants/COLORS';
+//PatientHistory Dummy Data
 import PatientHistoryData from '../../../../helpers/DummyData/PatientHistoryData';
 
 export default function SubsCription() {
+  // dummy data of PatientHistoryData(subscription)
   const subscription = PatientHistoryData.subscription;
+  // rendering Items of subscription
   const renderItem = ({item}) => {
     return (
       <View style={{borderBottomWidth: 0.5, borderBottomColor: '#B4D3FC'}}>

@@ -4,18 +4,35 @@
 **/
 import React, {useState} from 'react';
 import {View, Text, TouchableOpacity, StyleSheet} from 'react-native';
-import AllPurposeHeader from '../../../common/AllPurposeHeader';
-import VirtualizedView from '../../../common/VirtualizedView';
+//Colors And Dynamic Screen
 import COLORS from '../../../constants/COLORS';
 import normalization from '../../../constants/normalization';
+
+import AllPurposeHeader from '../../../common/AllPurposeHeader';
+import VirtualizedView from '../../../common/VirtualizedView';
 import Appointment from './Apointment';
 import Order from './Order';
 import SubsCription from './SubsCription';
 
 export default function History(props) {
+  /*
+  Getting properties from navigation
+
+  variables-
+  navigation: navigation properties
+  */  
   const {navigation} = props;
 
+  /**
+   * States
+   * @name: selected Id
+   */
   const [selected, setSelected] = useState('1');
+  
+  /**
+   * @name: onBackNavigate
+   * @function: navigation Back
+   */
   const onBackNavigate = () => {
     navigation.goBack();
   };
@@ -24,9 +41,15 @@ export default function History(props) {
     navigation.goBack();
   };
 
+  /**
+   * @name: arrowMaringLeftSize
+   * @function: margin Of Arrow Icon
+   */
   const arrowMaringLeftSize = () => {
     return selected === '1' ? '15%' : selected === '2' ? '48%' : '80%';
   };
+
+  //render View
   return (
     <>
       <AllPurposeHeader title="History" onBackNavigate={onBackNavigate} />

@@ -4,10 +4,17 @@
 **/
 import React from 'react';
 import {View, Text} from 'react-native';
+
+//Colors And Dynamic Screen
 import normalization from '../../../../constants/normalization';
 import COLORS from '../../../../constants/COLORS';
 
 export default function ApprovedItem(props) {
+  /**
+   * Getting properties from navigation
+   * variables-
+   * item: item of Approved List (Object)
+   */
   const {item} = props;
   return (
     <View

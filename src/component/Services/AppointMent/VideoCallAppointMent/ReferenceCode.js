@@ -5,6 +5,7 @@
 
 import React from 'react';
 import {View, Text, TextInput, TouchableOpacity} from 'react-native';
+//Colors And Dynamic Screen
 import normalization from '../../../../constants/normalization';
 import COLORS from '../../../../constants/COLORS';
 

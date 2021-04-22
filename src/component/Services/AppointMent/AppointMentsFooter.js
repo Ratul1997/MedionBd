@@ -4,10 +4,20 @@
 **/
 import React from 'react';
 import {View, Text, TouchableOpacity} from 'react-native';
+//Colors And Dynamic Screen
 import normalization from '../../../constants/normalization';
 import COLORS from '../../../constants/COLORS';
 
 export default function AppointMentsFooter(props) {
+  /**
+   * Getting properties from navigation
+   * 
+   * variables-
+   * title: title of Footer(string)
+   * 
+   * functions-
+   * onConfirm- confirmation Pressed
+   */
   const {title, onConfirm} = props;
   return (
     <TouchableOpacity

@@ -9,8 +9,15 @@ import COLORS from '../../../constants/COLORS';
 import normalization from '../../../constants/normalization';
 
 export default function UppCommingVOAppointMents(props) {
+  /*
+  Getting properties from navigation
+
+  variables-
+  appointmentSchedule: schedule of appointment Data (Array of Objects)
+  */
   const {appointmentSchedule} = props;
 
+  //renderItem
   const renderItem = ({item}) => {
     if (item.key !== '1') {
       return (

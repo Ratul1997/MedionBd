@@ -16,7 +16,7 @@ import Carousel, {Pagination} from 'react-native-snap-carousel';
 //Colors And Dynamic Screen
 import COLORS from '../../../constants/COLORS';
 import normalization from '../../../constants/normalization';
-
+// width and height of window
 const {width: viewportWidth, height: viewportHeight} = Dimensions.get('window');
 
 function wp(percentage) {

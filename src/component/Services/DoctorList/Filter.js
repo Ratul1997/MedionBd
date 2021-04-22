@@ -9,19 +9,22 @@ import {
   Text,
   StyleSheet,
   FlatList,
-  ScrollView,
   TouchableOpacity,
   Dimensions,
 } from 'react-native';
+
+import RadioButtonRN from 'radio-buttons-react-native';
+//Colors And Dynamic Screen
+import COLORS from '../../../constants/COLORS';
+import normalization from '../../../constants/normalization';
+//Vector Icons
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import Feather from 'react-native-vector-icons/Feather';
 import EvilIcons from 'react-native-vector-icons/EvilIcons';
-
-import RadioButtonRN from 'radio-buttons-react-native';
-import COLORS from '../../../constants/COLORS';
-import normalization from '../../../constants/normalization';
+//Width of Window
 const WIDTH = Dimensions.get('window').width;
 
+//Filer Data
 const DATA = [
   {
     key: '1',
@@ -61,6 +64,7 @@ const DATA = [
   },
 ];
 
+///Filter Items View
 const Item = ({item}) => (
   <View style={styles.section}>
     <Text
@@ -81,7 +85,16 @@ const Item = ({item}) => (
   </View>
 );
 
-export default function Filter({navigation}) {
+export default function Filter(props) {
+  /*
+  Getting properties from navigation
+
+  variables-
+  navigation: navigation properties
+  */
+  const {navigation} = props;
+
+  //render Main View
   return (
     <View style={{flex: 1}}>
       <View
@@ -124,9 +137,9 @@ export default function Filter({navigation}) {
           alignItems: 'center',
           backgroundColor: '#fff',
           elevation: 25,
-          position:'absolute',
-          right:10,
-          bottom:30
+          position: 'absolute',
+          right: 10,
+          bottom: 30,
         }}
         onPress={() => navigation.goBack()}>
         <Feather name="x" size={30} color="#4764ef" />

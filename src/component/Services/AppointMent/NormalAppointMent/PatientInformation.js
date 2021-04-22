@@ -5,28 +5,34 @@
 
 import React, {useState} from 'react';
 import {View, Text, TextInput, StyleSheet} from 'react-native';
-
 import {Picker} from '@react-native-community/picker';
+//Colors And Dynamic Screen
 import COLORS from '../../../../constants/COLORS';
 import normalization from '../../../../constants/normalization';
 
 export default function PatientInformation() {
+  /**
+   * States:
+   */
   const [selectedValue, setSelectedValue] = useState('');
   const [selectedValue1, setSelectedValue1] = useState('');
   const [selectedValue2, setSelectedValue2] = useState('');
   const [selectedValue3, setSelectedValue3] = useState('');
   const [selectedValue4, setSelectedValue4] = useState('');
 
+  //Dummy Time data
   const timeData = [
     {id: '1', title: '9:30 AM'},
     {id: '2', title: '9:30 AM'},
     {id: '3', title: '9:30 AM'},
   ];
+  // Dummy Date Data
   const dateData = [
     {id: '1', title: '25-09-2020'},
     {id: '2', title: '12-10-2020'},
     {id: '3', title: '11-10-2020'},
   ];
+  // Dummy Chamber Address
   const chamberData = [
     {id: '1', title: 'LabAid'},
     {id: '2', title: 'DMC'},

@@ -5,14 +5,23 @@
 
 import React from 'react';
 import {View, Text, StyleSheet, FlatList} from 'react-native';
+//Colors And Dynamic Screen
 import COLORS from '../../../../constants/COLORS';
 import normalization from '../../../../constants/normalization';
+//PatientHistoryData Dummy Data
 import PatientHistoryData from '../../../../helpers/DummyData/PatientHistoryData';
+//Vector Icon
 import Entypo from 'react-native-vector-icons/Entypo';
+
 export default function Order() {
+  /**
+   * packages: Patient Packages
+   * medicine: Patient Medicines
+   */
   const packages = PatientHistoryData.packages;
   const medicine = PatientHistoryData.medicine;
 
+  // render Packages
   const package_renderItem = ({item}) => {
     return (
       <View style={{borderBottomWidth: 0.5, borderBottomColor: '#B4D3FC'}}>
@@ -42,12 +51,13 @@ export default function Order() {
           <Text style={styles.nameStyle}>Medicine Names</Text>
           <View style={styles.straightLine} />
         </View>
-        <FlatList data={medicine} renderItem={renderItem} />
+        <FlatList data={medicine} renderItem={render_Medicine} />
       </View>
     );
   };
 
-  const renderItem = ({item}) => {
+  //render Medicines
+  const render_Medicine = ({item}) => {
     return (
       <View style={{flexDirection: 'row'}}>
         <Entypo name="dot-single" size={normalization(27)} />

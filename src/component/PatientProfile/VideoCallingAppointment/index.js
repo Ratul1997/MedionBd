@@ -12,14 +12,30 @@ import UppCommingVOAppointMents from '../common/UppCommingVOAppointMents';
 import GetAppointMentsFooter from '../../Services/AppointMent/AppointMentsFooter';
 
 export default function VideoCallingAppointment(props) {
+  /*
+  Getting properties from navigation
+
+  variables-
+  navigation: navigation properties
+  */
   const {navigation} = props;
+  /**
+   * @name: onBackNavigate
+   * @function: navigate Back
+   */
   const onBackNavigate = () => {
     navigation.goBack();
   };
+  /**
+   * @name: onConfirm
+   * @function: navigate Back
+   */
 
   const onConfirm = () => {
     navigation.goBack();
   };
+
+  //render Main View
   return (
     <>
       <AllPurposeHeader

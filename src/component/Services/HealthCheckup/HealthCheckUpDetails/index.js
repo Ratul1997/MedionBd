@@ -11,26 +11,44 @@ import {
   TouchableOpacity,
   Alert,
 } from 'react-native';
+//Colors And Dynamic Screen
 import COLORS from '../../../../constants/COLORS';
 import normalization from '../../../../constants/normalization';
-import AllPurposeHeader from '../../../../common/AllPurposeHeader';
-// import CheckBox from '@react-native-community/checkbox';
-import AntDesign from 'react-native-vector-icons/AntDesign';
-import VirtualizedView from '../../../../common/VirtualizedView';
 
-import RadioButtonRN from 'radio-buttons-react-native';
+import AllPurposeHeader from '../../../../common/AllPurposeHeader';
+import VirtualizedView from '../../../../common/VirtualizedView';
+//DummyData
 import CheckUpTestData from '../../../../helpers/DummyData/CheckUpTestData';
 
 export default function HealthCheckUpDetails(props) {
+  /*
+  Getting properties from navigation
+
+  variables-
+  navigation: navigation properties
+  */
   const {navigation} = props;
 
-  const testData = CheckUpTestData
+  //Dummy data
+  const testData = CheckUpTestData;
+  /**
+   * States-
+   * isSelected:
+   */
   const [isSelected, setSelection] = useState(false);
 
+  /**
+   * @name: onBackNavigate
+   * @function: navigate Back
+   */
   const onBackNavigate = () => {
     navigation.goBack();
   };
 
+  /**
+   * @name: BookingAlert
+   * @function: Alert when Package is Booked
+   */
   const BookingAlert = () =>
     Alert.alert(
       'Do you want to book?',
@@ -41,6 +59,7 @@ export default function HealthCheckUpDetails(props) {
       ],
       {cancelable: false},
     );
+  //render Items
   const renderItem = ({item}) => {
     const checked =
       isSelected === item.key ? setSelection(true) : setSelection(false);
@@ -64,6 +83,7 @@ export default function HealthCheckUpDetails(props) {
       </View>
     );
   };
+  //render Main View
   return (
     <View style={{flex: 1, backgroundColor: COLORS.DoctorAppnt_Background}}>
       <AllPurposeHeader title="Details" onBackNavigate={onBackNavigate} />

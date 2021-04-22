@@ -3,21 +3,19 @@
  function: This is a  component for AnsewerdItem
 **/
 import * as React from 'react';
-import {
-  Button,
-  View,
-  Text,
-  StyleSheet,
-  FlatList,
-  TouchableOpacity,
-  ScrollView,
-  Dimensions,
-} from 'react-native';
+import {View, Text, StyleSheet} from 'react-native';
 
+//Colors And Dynamic Screen
 import COLORS from '../../../../constants/COLORS';
 import normalization from '../../../../constants/normalization';
 
 export default function AnsewerdItem(props) {
+  /*
+  Getting properties from navigation
+
+  variables-
+  item: an item of Answered List (Obeject)
+  */
   const {item} = props;
   return (
     <View
@@ -40,5 +38,3 @@ export default function AnsewerdItem(props) {
     </View>
   );
 }
-
-const styles = StyleSheet.create({});

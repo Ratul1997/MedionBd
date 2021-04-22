@@ -4,8 +4,10 @@
 **/
 import React, {useState} from 'react';
 import {View, Text, TouchableOpacity, FlatList} from 'react-native';
+//Colors And Dynamic Screen
 import normalization from '../../../../constants/normalization';
 import COLORS from '../../../../constants/COLORS';
+
 import HealthCheckUpFiles from './HealthCheckUpFiles';
 import UploadedFiles from './UploadedFiles';
 
@@ -69,7 +71,7 @@ export default function PreviousFiles() {
       <View>
         <FlatList data={option} horizontal={true} renderItem={renderItem3} />
       </View>
-      {selected === '1' ? <UploadedFiles/> : <HealthCheckUpFiles />}
+      {selected === '1' ? <UploadedFiles /> : <HealthCheckUpFiles />}
     </>
   );
 }

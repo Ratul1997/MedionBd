@@ -4,14 +4,18 @@
 **/
 import React from 'react';
 import {View, Text} from 'react-native';
-import AntDesign from 'react-native-vector-icons/AntDesign';
 import CalendarPicker from 'react-native-calendar-picker';
-import Feather from 'react-native-vector-icons/Feather';
-import moment from 'moment';
+// Colors And Dynamic Screen
 import COLORS from '../../../../constants/COLORS';
 import normalization from '../../../../constants/normalization';
+// Moment 
+import moment from 'moment';
+//Vector Icons
+import AntDesign from 'react-native-vector-icons/AntDesign';
+import Feather from 'react-native-vector-icons/Feather';
 
 export default function CalenderContainer() {
+  //render Main View
   return (
     <View style={{width: '100%', marginBottom: 20}}>
       <Text

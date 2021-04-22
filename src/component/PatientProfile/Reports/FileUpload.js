@@ -4,8 +4,10 @@
 **/
 import React from 'react';
 import {View, Text, TextInput, TouchableOpacity} from 'react-native';
+//Colors And Dynamic Screen
 import COLORS from '../../../constants/COLORS';
 import normalization from '../../../constants/normalization';
+//Vector Icons
 import Feather from 'react-native-vector-icons/Feather';
 export default function FileUpload() {
   return (

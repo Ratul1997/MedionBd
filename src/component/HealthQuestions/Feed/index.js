@@ -4,29 +4,35 @@
 **/
 
 import React, {useState} from 'react';
-import {
-  View,
-  Text,
-  StyleSheet,
-  TextInput,
-  TouchableOpacity,
-  FlatList,
-} from 'react-native';
+import {View, Text, TouchableOpacity, FlatList} from 'react-native';
+//Colors And Dynamic Screen
 import COLORS from '../../../constants/COLORS';
 import normalization from '../../../constants/normalization';
+
 import AllPurposeHeader from '../../../common/AllPurposeHeader';
 import VirtualizedView from '../../../common/VirtualizedView';
 import FeedData from '../../../helpers/FeedData';
-import AntDesign from 'react-native-vector-icons/AntDesign';
-import AnswerAprrovedFeedDataDummy from '../../../helpers/DummyData/AnswerAprrovedFeedDataDummy';
-import AnsewerdItem from './Answered/AnsewerdItem';
 import Answered from './Answered';
 import Approved from './Approved';
+
 export default function Feed(props) {
+  /*
+  Getting properties from navigation
+
+  variables-
+  navigation: navigation properties
+  */
   const {navigation} = props;
 
+  //States
+
+  /**
+   * @name: selectedId for State
+   * @function: setSelectedId for setting State
+   */
   const [selectedId, setSelectedId] = useState('1');
 
+  // render Items
   const renderItem = ({item}) => {
     const backgroundColor =
       item.key === selectedId ? COLORS.doctorListHeader : '#fff';
@@ -47,9 +53,15 @@ export default function Feed(props) {
     );
   };
 
+  /**
+   * @name: onBackNavigate
+   * @function: navigate Back
+   */
   const onBackNavigate = () => {
     navigation.goBack();
   };
+
+  //render main
   return (
     <View style={{flex: 1, backgroundColor: COLORS.DoctorAppnt_Background}}>
       <AllPurposeHeader title="Feed" onBackNavigate={onBackNavigate} />

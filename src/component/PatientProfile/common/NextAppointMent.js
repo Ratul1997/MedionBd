@@ -5,11 +5,24 @@
 
 import React from 'react';
 import {View, Text, FlatList, TouchableOpacity} from 'react-native';
+
+//Colors And Dynamic Screen
 import COLORS from '../../../constants/COLORS';
 import normalization from '../../../constants/normalization';
 
 export default function NextAppointMent(props) {
+  /*
+  Getting properties from navigation
+
+  variables-
+  appointmentSchedule: schedule of appointment Data (Array of Objects)
+  */
   const {appointmentSchedule} = props;
+
+  /**
+   * @name: renderIem
+   * @function: rendering item of appointmentSchedule
+   */
   const renderItem = ({item}) => {
     if (item.key === '1') {
       return (

@@ -3,24 +3,22 @@
  function: This is a component for Custom TextInput
 **/
 import * as React from 'react';
-import {
-  Button,
-  View,
-  Text,
-  TextInput,
-  StyleSheet,
-  FlatList,
-  TouchableOpacity,
-  ScrollView,
-  Dimensions,
-} from 'react-native';
-import AntDesign from 'react-native-vector-icons/AntDesign';
-import Feather from 'react-native-vector-icons/Feather';
-import EvilIcons from 'react-native-vector-icons/EvilIcons';
+import {View, TextInput, Dimensions} from 'react-native';
+//Colors And Dynamic Screen
 import COLORS from '../../../../constants/COLORS';
 import normalization from '../../../../constants/normalization';
+//Vector Icons
+import EvilIcons from 'react-native-vector-icons/EvilIcons';
 
-export default function InputField({text, iconName}) {
+export default function InputField(props) {
+  /**
+   * Getting properties from navigation
+   * 
+   * variables: 
+   * text: PlaceHolderText (string)
+   * iconName: iconName (string)
+   */
+  const {text, iconName} = props;
   return (
     <View
       style={{

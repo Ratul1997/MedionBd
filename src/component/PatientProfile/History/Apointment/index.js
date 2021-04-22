@@ -5,12 +5,20 @@
 
 import React, {useState} from 'react';
 import {View, Text, FlatList} from 'react-native';
+//Colors And Dynamic Screen
 import normalization from '../../../../constants/normalization';
 import COLORS from '../../../../constants/COLORS';
+
+//Dummy Data
 import PatientHistoryData from '../../../../helpers/DummyData/PatientHistoryData';
 
 export default function Appointment() {
+  
+  //Dummy Data of appointmentHistory
   const appointmentHistory = PatientHistoryData.appointmentHistory;
+  
+  
+  // render Items
   const renderItem = ({item}) => {
     return (
       <View

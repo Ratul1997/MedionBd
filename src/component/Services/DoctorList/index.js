@@ -5,20 +5,33 @@
 
 import React from 'react';
 import {View, Text, TouchableOpacity, Dimensions, FlatList} from 'react-native';
+//Colors And Dynamic Screen
 import COLORS from '../../../constants/COLORS';
 import normalization from '../../../constants/normalization';
+//Vector Icons
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import Feather from 'react-native-vector-icons/Feather';
-import DoctorSearch from './DoctorSearch';
+//DummyData of DoctorLists
 import DoctorLists from '../../../helpers/DummyData/DoctorLists';
+
+import DoctorSearch from './DoctorSearch';
+import AllPurposeHeader from '../../../common/AllPurposeHeader';
 import VirtualizedView from '../../../common/VirtualizedView';
 import DoctorItem from './DoctorItem';
-import AllPurposeHeader from '../../../common/AllPurposeHeader';
-const WIDTH = Dimensions.get('window').width;
 
 export default function DoctorList(props) {
+  /*
+  Getting properties from navigation
+
+  variables-
+  navigation: navigation properties
+  */
   const {navigation} = props;
 
+  /**
+   * @name: onBackNavigate
+   * @function: navigate Back
+   */
   const onBackNavigate = () => {
     navigation.goBack();
   };
@@ -30,7 +43,6 @@ export default function DoctorList(props) {
         filter
       />
       {/**search part */}
-
       <DoctorSearch />
 
       <FlatList

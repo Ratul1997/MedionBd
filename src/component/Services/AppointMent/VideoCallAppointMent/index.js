@@ -4,6 +4,11 @@
 **/
 import React, {useState} from 'react';
 import {View, Text, ScrollView, TouchableOpacity} from 'react-native';
+import {FlatList} from 'react-native-gesture-handler';
+//Colors And Dynamic Screen
+import normalization from '../../../../constants/normalization';
+import COLORS from '../../../../constants/COLORS';
+
 import AllPurposeHeader from '../../../../common/AllPurposeHeader';
 import LoginModal from '../../../../common/LoginModal';
 import Login from '../../../Auth/Login';
@@ -11,10 +16,6 @@ import DoctorInformation from '../DoctorInformation';
 import AppointMentsFooter from '../AppointMentsFooter';
 import CalenderContainer from './CalenderContainer';
 import VirtualizedView from '../../../../common/VirtualizedView';
-import {FlatList} from 'react-native-gesture-handler';
-import normalization from '../../../../constants/normalization';
-import COLORS from '../../../../constants/COLORS';
-
 
 const AvailableTime = [
   {
@@ -44,21 +45,36 @@ export default function VideoCallAppointMent(props) {
   const [modalVisible, setModalVisible] = useState(false);
 
   const [selectedId, setSelectedId] = useState(null);
+  /**
+   * @name: onBackNavigate
+   * @function: navigation Pop
+   */
   const onBackNavigate = () => {
     navigation.pop();
   };
+  /**
+   * @name: onPressCloseModal
+   * @function: setting Modal Invisible
+   */
   const onPressCloseModal = () => {
     setModalVisible(false);
   };
-
+  /**
+   * @name: onConfirm
+   * @function: setting Modal Visible
+   */
   const onConfirm = () => {
     setModalVisible(true);
   };
-
+  /**
+   * @name: applyButtonClick
+   * @function: navigate to VideoCallProfileInformation
+   */
   const applyButtonClick = () => {
     navigation.replace('VideoCallProfileInformation');
   };
 
+  //rendering Items of AvailableTime
   const renderItem = ({item}) => {
     const backgroundColor = item.id === selectedId ? '#19769F' : '#fff';
     const color = item.id === selectedId ? '#fff' : '#19769F';
@@ -78,6 +94,7 @@ export default function VideoCallAppointMent(props) {
       </TouchableOpacity>
     );
   };
+  //rendering Main View
   return (
     <>
       <AllPurposeHeader title="Appointment" onBackNavigate={onBackNavigate} />

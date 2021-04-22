@@ -8,6 +8,8 @@ import {View, Text, TouchableOpacity, Dimensions, Image} from 'react-native';
 import COLORS from '../../../constants/COLORS';
 import normalization from '../../../constants/normalization';
 
+
+//width of screen 35%
 const itemWidth = Dimensions.get('window').width * 0.35;
 
 const DataItem = ({item, navigation, screenName}) => {

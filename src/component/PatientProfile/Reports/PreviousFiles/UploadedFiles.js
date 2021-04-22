@@ -5,13 +5,18 @@
 
 import React from 'react';
 import {View, Text, FlatList, TouchableOpacity} from 'react-native';
+//Colors And Dynamic Screen
 import COLORS from '../../../../constants/COLORS';
 import normalization from '../../../../constants/normalization';
+//Vector Icons
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import Feather from 'react-native-vector-icons/Feather';
 import Fontisto from 'react-native-vector-icons/Fontisto';
+//Dummy Data
 import ReportsData from '../../../../helpers/DummyData/ReportsData';
 export default function UploadedFiles() {
+  
+  //render items of ReportData
   const renderItem = ({item}) => {
     return (
       <View
@@ -60,6 +65,8 @@ export default function UploadedFiles() {
       </View>
     );
   };
+
+  //render Main View
   return (
     <>
       <View

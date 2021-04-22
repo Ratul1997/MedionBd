@@ -5,24 +5,42 @@
 
 import React from 'react';
 import {View, Text} from 'react-native';
+
 import AllPurposeHeader from '../../../common/AllPurposeHeader';
 import VirtualizedView from '../../../common/VirtualizedView';
-import COLORS from '../../../constants/COLORS';
-import normalization from '../../../constants/normalization';
-import Ionicons from 'react-native-vector-icons/Ionicons';
 import NextReminder from './NextReminder';
 import UpComingReminder from './UpComingReminder';
-import MedicineReminderData from '../../../helpers/DummyData/MedicineReminderData';
 import GetMedicineFooter from '../../Services/AppointMent/AppointMentsFooter';
+
+//Dummy Data
+import MedicineReminderData from '../../../helpers/DummyData/MedicineReminderData';
+
 export default function MedicineReminder(props) {
+  /*
+  Getting properties from navigation
+
+  variables-
+  navigation: navigation properties
+  */
   const {navigation} = props;
+  
+  /**
+   * @name: onBackNavigate
+   * @function: navigation Back
+   */
   const onBackNavigate = () => {
     navigation.goBack();
   };
 
+  /**
+   * @name: onConfirm
+   * @function: navigation Back
+   */
   const onConfirm = () => {
     navigation.goBack();
   };
+
+  //render View
   return (
     <>
       <AllPurposeHeader

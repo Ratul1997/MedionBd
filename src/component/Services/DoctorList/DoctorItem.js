@@ -3,33 +3,40 @@
  function: This is a component for DoctorItem
 **/
 import * as React from 'react';
-import {
-  Button,
-  View,
-  Text,
-  StyleSheet,
-  FlatList,
-  TouchableOpacity,
-  Image,
-  Dimensions,
-} from 'react-native';
-import AntDesign from 'react-native-vector-icons/AntDesign';
-import Feather from 'react-native-vector-icons/Feather';
-import EvilIcons from 'react-native-vector-icons/EvilIcons';
+import {View, Text, TouchableOpacity, Image, Dimensions} from 'react-native';
+//Colors And Dynamic Screens
 import COLORS from '../../../constants/COLORS';
 import normalization from '../../../constants/normalization';
+//Width of Window
 const WIDTH = Dimensions.get('window').width;
 
 export default function DoctorItem(props) {
+  /*
+  Getting properties from navigation
+
+  variables-
+  item: doctor Information (Object)
+  navigation: navigation properties
+  */
   const {item, navigation, index} = props;
+  /**
+   * @name: navigateNormalAppointMent
+   * @function: navigate to NormalAppointMent Page
+   */
   const navigateNormalAppointMent = () => {
     navigation.navigate('NormalAppointment');
   };
-
+  /**
+   * @name: navigateVideoCallAppointMent
+   * @function: navigate to VideoCallAppointMent Page
+   */
   const navigateVideoCallAppointMent = () => {
     navigation.navigate('VideoCallAppointMent');
   };
-
+  /**
+   * @name: navigateDoctorProfile
+   * @function: navigate to DoctorProfile by passing DoctorList title
+   */
   const navigateDoctorProfile = () => {
     navigation.navigate('DoctorStack', {
       screen: 'DoctorProfile',
