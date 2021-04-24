@@ -31,6 +31,7 @@ import Blog from './component/Blog';
 import BlogDetails from './component/Blog/BlogDetails';
 import SplashScreen from './SplashScreen';
 import VideoCall from './component/VideoCall';
+import OperateButton from './component/VideoCall/OperateButton';
 
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -201,7 +202,7 @@ const BlogStack = () => {
 
 const DrawerNav = () => {
   return (
-    <Drawer.Navigator>
+    <Drawer.Navigator initialRouteName="Video Call">
       <Drawer.Screen name="Home" component={LogInStack} />
       <Drawer.Screen name="Blogs" component={BlogStack} />
       <Drawer.Screen name="Patient Profile" component={PatientProfile} />

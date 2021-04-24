@@ -5765,6 +5765,11 @@ react-native-modal-datetime-picker@^9.2.0:
   dependencies:
     prop-types "^15.7.2"
 
+react-native-movable-view@^1.0.3:
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/react-native-movable-view/-/react-native-movable-view-1.0.3.tgz#f87cd77aaae20b049fb95153fc0ebb87d9cfc71b"
+  integrity sha512-Qd2+03TJYzkDBHVHp0Id5RaPMTgft8kYZtd4hgGjjk7OK9p0fGcEuspyyyjlGbPkARPLsq26DaJn1N9F/BWtkg==
+
 react-native-paper@^4.7.2:
   version "4.7.2"
   resolved "https://registry.yarnpkg.com/react-native-paper/-/react-native-paper-4.7.2.tgz#a40d1da87af5b030d45b525313cd703d490876ff"

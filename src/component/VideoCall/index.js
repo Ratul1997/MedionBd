@@ -5,7 +5,7 @@
  * @format
  * @flow strict-local
  */
-import React, {Component, useState} from 'react';
+import React, {Component, useState, useEffect} from 'react';
 import {
   Platform,
   ScrollView,
@@ -25,33 +25,38 @@ import RtcEngine, {
   VideoRenderMode,
 } from 'react-native-agora';
 
-import {AGORA_API_ID} from "@env"
+import {AGORA_API_ID} from '@env';
 
 import requestCameraAndAudioPermission from '../../common/Permission';
 import axios from 'axios';
+import {async} from 'node-stream-zip';
+import OperateButton from './OperateButton';
+import RenderVideo from './RenderVideo';
 
 const dimensions = {
   width: Dimensions.get('window').width,
   height: Dimensions.get('window').height,
 };
-export default class VideoCall extends Component {
-  _engine = RtcEngine;
+export default function VideoCall() {
+  const [_engine, setEngine] = useState(undefined);
+  const [appId, setAppId] = useState(AGORA_API_ID);
+  const [token, setToken] = useState('');
+  const [channelName, setChannelName] = useState('');
+  const [uid, setUid] = useState(0);
+  const [joinSucceed, setJoinSucced] = useState(false);
+  const [peerIds, setPeerIds] = useState([]);
+  const [isVisible, setIsVisible] = useState(true);
+  const [tmpuid, setTmpUid] = useState('');
+  const [enabledAudio, setEnableAudio] = useState(false);
+  const [enabledVideo, setEnableVideo] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
+  const [isSpeak, setIsSpeak] = useState(true);
+  const [isCameraTorch, setIsCameraTorch] = useState(false);
+  const [isMute, setIsMute] = useState(true);
+  const [showVideo, setShowVideo] = useState(true);
+  const [isLoadingJoin, setIsLoadingJoin] = useState(false);
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      appId: AGORA_API_ID,
-      token: '',
-      channelName: '',
-      uid: 0,
-      joinSucceed: false,
-      peerIds: [],
-      isVisible: true,
-      tmpuid: '',
-      enabledAudio: false,
-      enabledVideo: true,
-      isLoading: false,
-    };
+  const requestPermission = () => {
     if (Platform.OS === 'android') {
       // Request required permissions from Android
       requestCameraAndAudioPermission()
@@ -60,257 +65,233 @@ export default class VideoCall extends Component {
         })
         .catch(err => console.log(err));
     }
-  }
+  };
 
-  componentDidMount() {
-    this.init();
-  }
-
+  useEffect(() => {
+    requestPermission();
+    init();
+  }, []);
   /**
    * @name init
    * @description Function to initialize the Rtc Engine, attach event listeners and actions
    */
-  init = async () => {
-    const {appId} = this.state;
-    this._engine = await RtcEngine.create(appId);
-    await this._engine.enableVideo();
+  const init = async () => {
+    const _engine = await RtcEngine.create(appId);
+    await _engine.enableVideo();
+    await _engine.enableLocalAudio(false);
 
-    this._engine.addListener('Warning', warn => {
+    _engine.addListener('Warning', warn => {
       console.log('Warning', warn);
     });
 
-    this._engine.addListener('Error', err => {
+    _engine.addListener('Error', err => {
       console.log('Error', err);
-    });
-
-    this._engine.addListener('UserJoined', (uid, elapsed) => {
-      console.log('UserJoined', uid, elapsed);
-      // Get current peer IDs
-      const {peerIds} = this.state;
-      // If new user
-      if (peerIds.indexOf(uid) === -1) {
-        this.setState({
-          // Add peer ID to state array
-          peerIds: [...peerIds, uid],
+      if (err === 17) {
+        _engine.leaveChannel().then(_ => {
+          setPeerIds([]);
+          setJoinSucced(false);
+          setIsLoadingJoin(false);
+          startCall(channelName, token);
         });
+      }
+      if (err === 18) {
+        _engine.leaveChannel().then(_ => {
+          setPeerIds([]);
+          setJoinSucced(false);
+          setIsLoadingJoin(false);
+        });
+      }
+      if (err === 109) {
+        setPeerIds([]);
+        setJoinSucced(false);
+        setIsLoadingJoin(false);
       }
     });
 
-    this._engine.addListener('UserOffline', (uid, reason) => {
+    _engine.addListener('UserJoined', (uid, elapsed) => {
+      console.log('UserJoined', uid, elapsed);
+      // Get current peer IDs
+      // If new user
+      if (peerIds.indexOf(uid) === -1) {
+        // Add peer ID to state array
+        setPeerIds([...peerIds, uid]);
+      }
+    });
+
+    _engine.addListener('UserOffline', (uid, reason) => {
       console.log('UserOffline', uid, reason);
-      const {peerIds} = this.state;
-      this.setState({
-        // Remove peer ID from state array
-        peerIds: peerIds.filter(id => id !== uid),
-      });
+      setPeerIds(peerIds.filter(id => id !== uid));
     });
 
     // If Local user joins RTC channel
-    this._engine.addListener('JoinChannelSuccess', (channel, uid, elapsed) => {
+    _engine.addListener('JoinChannelSuccess', (channel, uid, elapsed) => {
       console.log('JoinChannelSuccess', channel, uid, elapsed);
       // Set state variable to true
-      this.setState({
-        joinSucceed: true,
-      });
+
+      setIsLoadingJoin(true);
+      setJoinSucced(true);
     });
+
+    setEngine(_engine);
   };
 
-  /**
-   * @name startCall
-   * @description Function to start the call
-   */
-  startCall = async () => {
-    // Join Channel using null token and channel name
-    console.log(this.state.token, this.state.channelName);
-    await this._engine?.joinChannel(
-      this.state.token,
-      this.state.channelName,
-      null,
-      0,
-    );
-  };
+  const toggleVideo = async () => {
+    console.log(showVideo)
+    const newShowVideo = !showVideo;
 
-  getAuthKey = () => {
+    setShowVideo(newShowVideo);
+    if (newShowVideo) {
+      await _engine.enableVideo();
+      await _engine.startPreview();
+    } else {
+      await _engine.disableVideo();
+      await _engine.stopPreview();
+    }
+  };
+  const getAuthKey = () => {
     console.log('preessed');
-    this.setState({isLoading: true});
+    setIsLoading(true);
     axios
       .post('https://apimedion.medionbd.com/rtcServer', {
-        channelName: this.state.channelName.toLowerCase(),
+        channelName: tmpuid.toLowerCase(),
       })
       .then(res => {
         console.log(res.data);
-        this.setState({
-          token: res.data.tokens,
-          isVisible: false,
-          isLoading: false,
-        });
+        setToken(res.data.tokens);
+        setIsVisible(false);
+        setIsLoading(false);
+        setChannelName(tmpuid.toLowerCase());
+        startCall(tmpuid.toLowerCase(), res.data.tokens);
       })
-      .catch(err => this.setState({isLoading: false, channelName: ''}));
+      .catch(err => {
+        setChannelName('');
+        setTmpUid('');
+        setIsLoading(false);
+      });
+  };
+
+  const startCall = async (channelName, token) => {
+    // Join Channel using null token and channel name
+
+    setIsLoadingJoin(true);
+    console.log('data', token, channelName);
+    await _engine?.joinChannel(token, channelName, null, 0);
   };
 
   /**
    * @name endCall
    * @description Function to end the call
    */
-  endCall = async () => {
-    await this._engine?.leaveChannel();
-    this.setState({peerIds: [], joinSucceed: false});
+  const endCall = async () => {
+    await _engine?.leaveChannel();
+    setPeerIds([]);
+    setJoinSucced(false);
+
+    setIsLoadingJoin(false);
   };
 
-  muteCall = async () => {
-    this.setState({enabledAudio: !this.state.enabledAudio});
-    await this._engine?.enableLocalAudio(this.state.enabledAudio);
+  const muteCall = async () => {
+    await _engine?.enableLocalAudio(!enabledAudio);
+    setEnableAudio(!enabledAudio);
   };
 
-  disableVideo = async () => {
-    this.setState({enabledVideo: !this.state.enabledVideo});
-    await this._engine?.enableLocalVideo(this.state.enabledVideo);
+  const disableVideo = async () => {
+    setEnableVideo(!enabledVideo);
+    await _engine?.enableLocalVideo(!enabledVideo);
   };
 
-  disableVideo2 = async () => {
-    this.setState({enabledVideo: false});
-    await this._engine?.disableVideo();
-  };
-  enableVideo2 = async () => {
-    this.setState({enabledVideo: true});
-    await this._engine?.enableVideo();
+  const switchCamera = async () => {
+    _engine?.switchCamera();
   };
 
-  render() {
+  const toggleAllRemoteAudioStreams = async () => {
+    await _engine?.enableLocalAudio(!isMute);
+    setIsMute(!isMute);
+  };
+
+  const toggleSpeakerPhone = async () => {
+    await engine?.setDefaultAudioRoutetoSpeakerphone(isSpeak);
+    setIsSpeak(!isSpeak);
+  };
+
+  const toggleCameraTorch = async () => {
+    await engine?.setCameraTorchOn(isCameraTorch).then(val => {
+      console.log('setCameraTorch', val);
+    });
+    setIsCameraTorch(!isCameraTorch);
+  };
+
+  const _renderVideos = () => {
     return (
-      <View style={styles.max}>
-        <Modal
-          animationType={'fade'}
-          visible={this.state.isVisible}
-          transparent={true}
-          presentationStyle="overFullScreen"
-          onRequestClose={() => {
-            console.log('Modal has been closed.');
-          }}>
-          {/* Background of Modal */}
-          <View
-            style={{
-              flex: 1,
-              alignItems: 'center',
-              justifyContent: 'center',
-              backgroundColor: 'rgba(0,0,0,0.5)',
-            }}>
-            {/*All views of Modal*/}
-
-            <View
-              style={{
-                justifyContent: 'space-around',
-                alignItems: 'center',
-                backgroundColor: 'white',
-                height: 200,
-                width: '80%',
-                borderRadius: 10,
-                borderWidth: 1,
-                borderColor: '#fff',
-                marginTop: 80,
-                marginVertical: 40,
-              }}>
-              {this.state.isLoading ? (
-                <ActivityIndicator size="small" color="#0000ff" />
-              ) : (
-                <>
-                  <TextInput
-                    style={{
-                      width: '80%',
-                      borderColor: 'gray',
-                      borderWidth: 1,
-                      textAlignVertical: 'top',
-                    }}
-                    value={this.state.channelName}
-                    autoCorrect={false}
-                    onChangeText={text =>
-                      this.setState({channelName: text.toLowerCase()})
-                    }
-                    multiline
-                  />
-                  <Button title="Channel Name" onPress={this.getAuthKey} />
-                </>
-              )}
-            </View>
-          </View>
-        </Modal>
-        <View style={styles.max}>
-          {this.state.joinSucceed ? null : (
-            <>
-              <Text>Channel Name: {this.state.channelName}</Text>
-              <Button
-                title="Edit"
-                onPress={() => this.setState({isVisible: true})}></Button>
-            </>
-          )}
-          <View style={styles.buttonHolder}>
-            {this.state.joinSucceed ? null : (
-              <TouchableOpacity onPress={this.startCall} style={styles.button}>
-                <Text style={styles.buttonText}> Start Call </Text>
-              </TouchableOpacity>
-            )}
-            <TouchableOpacity onPress={this.muteCall} style={styles.button}>
-              <Text style={styles.buttonText}>
-                {' '}
-                {this.state.enabledAudio ? 'Mute' : 'UnMute'}{' '}
-              </Text>
-            </TouchableOpacity>
-            {/* <TouchableOpacity
-              onPress={
-                this.state.enabledVideo ? this.disableVideo2 : this.enableVideo2
-              }
-              style={styles.button}>
-              <Text style={styles.buttonText}>
-                {' '}
-                {!this.state.enabledVideo ? 'Disable' : 'Show'}{' '}
-              </Text>
-            </TouchableOpacity> */}
-            <TouchableOpacity onPress={this.endCall} style={styles.button}>
-              <Text style={styles.buttonText}> End Call </Text>
-            </TouchableOpacity>
-          </View>
-          {this._renderVideos()}
-        </View>
-      </View>
+      <RenderVideo
+        channelName={channelName}
+        showVideo={showVideo}
+        endCall={endCall}
+        switchCamera={switchCamera}
+        toggleVideo={toggleVideo}
+        toggleSpeakerPhone={toggleSpeakerPhone}
+        isSpeak={isSpeak}
+        peerIds={peerIds}
+        toggleAllRemoteAudioStreams={toggleAllRemoteAudioStreams}
+        isMute={isMute}
+      />
     );
-  }
-
-  _renderVideos = () => {
-    const {joinSucceed} = this.state;
-    return joinSucceed ? (
-      <View style={styles.fullView}>
-        <RtcLocalView.SurfaceView
-          style={styles.max}
-          channelId={this.state.channelName}
-          renderMode={VideoRenderMode.Hidden}
+  };
+  const renderChannelNameView = () => {
+    return (
+      <>
+        <TextInput
+          style={{
+            width: '80%',
+            borderColor: 'gray',
+            borderWidth: 1,
+            textAlignVertical: 'top',
+          }}
+          value={tmpuid}
+          autoCorrect={false}
+          onChangeText={text => setTmpUid(text)}
+          multiline
         />
-        {this._renderRemoteVideos()}
-      </View>
-    ) : null;
-  };
-
-  _renderRemoteVideos = () => {
-    const {peerIds} = this.state;
-    return (
-      <ScrollView
-        style={styles.remoteContainer}
-        contentContainerStyle={{paddingHorizontal: 2.5}}
-        horizontal={true}>
-        {peerIds.map((value, key) => {
-          return (
-            <RtcRemoteView.TextureView
-              style={styles.remote}
-              uid={value}
-              key={key}
-              channelId={this.state.channelName}
-              renderMode={VideoRenderMode.Hidden}
-              zOrderMediaOverlay={true}
-            />
-          );
-        })}
-      </ScrollView>
+        <Button title="Join" onPress={getAuthKey} />
+      </>
     );
   };
+  const renderIsLoading = title => {
+    return (
+      <View style={{flexDirection: 'row'}}>
+        <ActivityIndicator size="small" color="blue" />
+        <Text>{title}</Text>
+      </View>
+    );
+  };
+  return (
+    <View style={styles.max}>
+      {joinSucceed ? (
+        _renderVideos()
+      ) : (
+        <View
+          style={{
+            justifyContent: 'space-around',
+            alignItems: 'center',
+            backgroundColor: 'white',
+            height: 200,
+            width: '80%',
+            borderRadius: 10,
+            borderWidth: 1,
+            borderColor: '#fff',
+            marginTop: 80,
+            marginVertical: 40,
+            alignSelf: 'center',
+          }}>
+          {isLoading
+            ? renderIsLoading('Preparing Meeting')
+            : isLoadingJoin
+            ? renderIsLoading('Connecting To Meeting')
+            : renderChannelNameView()}
+        </View>
+      )}
+    </View>
+  );
 }
 
 const styles = StyleSheet.create({
