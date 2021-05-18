@@ -1,6 +1,6 @@
 /** 
- name: LoginModal
- function: This is a modal component for login
+ name: Modal
+ function: This is a modal component 
 **/
 
 import React, {useState} from 'react';
@@ -12,7 +12,7 @@ import normalization from '../constants/normalization';
 // Vector Icons
 import Feather from 'react-native-vector-icons/Feather';
 
-export default function LoginModal(props) {
+export default function ModalComponent(props) {
   /*
 
   Getting properties from navigation
@@ -25,7 +25,7 @@ export default function LoginModal(props) {
   onPressCloseModal: for closing modal from routing page
   */
 
-  const {modalVisible, onPressCloseModal, children, crossIcon} = props;
+  const {modalVisible, onPressCloseModal, children, color, closeCross} = props;
   return (
     // Modal View
     <Modal
@@ -44,13 +44,13 @@ export default function LoginModal(props) {
         {/* Main Modal View */}
         <View
           style={{
-            width: '90%',
-            backgroundColor: '#fff',
+            width: '95%',
+            backgroundColor: color ? 'transparent' : '#fff',
             borderRadius: 25,
             padding: 25,
             elevation: 100,
           }}>
-          {crossIcon && (
+          {!closeCross && (
             <TouchableOpacity onPress={onPressCloseModal}>
               <Feather
                 style={{alignSelf: 'flex-end'}}

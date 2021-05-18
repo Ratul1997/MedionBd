@@ -36,8 +36,10 @@ export default function Chambers(props) {
           borderWidth: 3,
           borderRadius: 10,
         }}>
-        <Text style={{fontSize: normalization(15)}}>{item.title}</Text>
-        <Text style={{fontSize: normalization(15)}}>{item.address}</Text>
+        <Text style={{fontSize: normalization(12)}}>{item.chamber_name}</Text>
+        <Text style={{fontSize: normalization(10)}}>
+          {item.chamber_address}
+        </Text>
       </View>
     );
   };
@@ -54,10 +56,11 @@ export default function Chambers(props) {
       <FlatList
         style={{marginRight: normalization(20), marginLeft: normalization(20)}}
         data={chamberData}
-        horizontal={true}
+        // horizontal={true}
         showsHorizontalScrollIndicator={false}
         renderItem={renderItem}
         listKey={(item, index) => 'D' + index.toString()}
+        keyExtractor={item => item.idchambers}
       />
     </View>
   );

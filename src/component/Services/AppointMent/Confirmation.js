@@ -17,7 +17,9 @@ export default function Confirmation(props) {
   variables-
   navigation: navigation properties
   */
-  const {navigation} = props;
+  const {navigation, route} = props;
+  const {name, time} = route.params;
+  console.log(props)
   return (
     <View style={{flex: 1, backgroundColor: COLORS.DoctorAppnt_Background}}>
       <TouchableOpacity
@@ -36,10 +38,10 @@ export default function Confirmation(props) {
           Congratulation
         </Text>
         <Text style={{textAlign: 'center', fontSize: normalization(18)}}>
-          Your appointment with (Doctor name) has been confirmed on
+          Your appointment with {name} has been confirmed on
         </Text>
         <Text style={{textAlign: 'center', fontSize: normalization(18)}}>
-          (Date) at (time)
+          {time}
         </Text>
       </View>
     </View>

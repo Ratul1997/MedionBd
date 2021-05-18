@@ -3,7 +3,7 @@
  function: This is a component for Filter
 **/
 
-import * as React from 'react';
+import React, {useState} from 'react';
 import {
   View,
   Text,
@@ -37,53 +37,45 @@ const DATA = [
       {label: 'Neurologist'},
     ],
   },
-  {
-    key: '2',
-    title: 'Consultation Fee',
-    subitems: [
-      {label: 'Free'},
-      {label: '1-200'},
-      {label: '201-500'},
-      {label: '5001-1000'},
-    ],
-  },
-  {
-    key: '3',
-    title: 'Sort by',
-    subitems: [{label: 'Consultation Fee'}],
-  },
-  {
-    key: '4',
-    title: 'Online Booking',
-    subitems: [{label: 'Online Booking'}],
-  },
-  {
-    key: '5',
-    title: 'In Hospital',
-    subitems: [{label: 'govt hospital'}],
-  },
+  // {
+  //   key: '2',
+  //   title: 'Consultation Fee',
+  //   subitems: [
+  //     {label: 'Free'},
+  //     {label: '1-200'},
+  //     {label: '201-500'},
+  //     {label: '5001-1000'},
+  //   ],
+  // },
+  // {
+  //   key: '3',
+  //   title: 'Sort by',
+  //   subitems: [{label: 'Consultation Fee'}],
+  // },
 ];
 
 ///Filter Items View
-const Item = ({item}) => (
-  <View style={styles.section}>
-    <Text
-      style={{
-        color: '#898A8F',
-        fontSize: normalization(12),
-        marginStart: normalization(15),
-      }}>
-      {item.title}
-    </Text>
-    <RadioButtonRN
-      data={item.subitems}
-      circleSize={3}
-      box={false}
-      textStyle={{color: '#313450', fontSize: normalization(13)}}
-      selectedBtn={e => console.log(e)}
-    />
-  </View>
-);
+const Item = ({item, filterDoctor}) => {
+  return (
+    <View style={styles.section}>
+      <Text
+        style={{
+          color: '#898A8F',
+          fontSize: normalization(12),
+          marginStart: normalization(15),
+        }}>
+        {item.title}
+      </Text>
+      <RadioButtonRN
+        data={item.subitems}
+        circleSize={3}
+        box={false}
+        textStyle={{color: '#313450', fontSize: normalization(13)}}
+        selectedBtn={e => filterDoctor(e, item.key)}
+      />
+    </View>
+  );
+};
 
 export default function Filter(props) {
   /*
@@ -92,40 +84,32 @@ export default function Filter(props) {
   variables-
   navigation: navigation properties
   */
-  const {navigation} = props;
+  const {navigation, onCloseModal, filterDoctor, applyFilter} = props;
 
+  /**
+   * states
+   */
   //render Main View
   return (
-    <View style={{flex: 1}}>
-      <View
-        style={{
-          height: normalization(50),
-          paddingStart: normalization(15),
-          paddingEnd: normalization(15),
-          backgroundColor: '#0759C4',
-          flexDirection: 'row',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-        }}>
-        <Text
-          style={{
-            fontSize: normalization(16),
-            fontWeight: 'bold',
-            color: COLORS.white,
-          }}>
-          Filter
-        </Text>
-        <Text style={{fontSize: normalization(12), color: COLORS.white}}>
-          Apply
-        </Text>
-      </View>
+    <View
+      style={{
+        // height: '90%',
+        maxHeight: '90%',
+        minHeight:'50%',
+        width: '95%',
+        borderRadius: 10,
+        backgroundColor: '#acccf5',
+      }}>
       <FlatList
         data={DATA}
-        renderItem={({item}) => <Item item={item} />}
+        renderItem={({item}) => (
+          <Item item={item} filterDoctor={filterDoctor} />
+        )}
         contentContainerStyle={{
           alignItems: 'center',
           backgroundColor: '#acccf5',
-          paddingTop: normalization(10),
+          padding: normalization(10),
+          borderRadius: 10,
         }}
       />
       <TouchableOpacity
@@ -139,10 +123,26 @@ export default function Filter(props) {
           elevation: 25,
           position: 'absolute',
           right: 10,
+          bottom: 90,
+        }}
+        onPress={onCloseModal}>
+        <Feather name="x" size={30} color="#4764ef" />
+      </TouchableOpacity>
+      <TouchableOpacity
+        style={{
+          height: 50,
+          width: 50,
+          borderRadius: 80 / 2,
+          justifyContent: 'center',
+          alignItems: 'center',
+          backgroundColor: '#fff',
+          elevation: 25,
+          position: 'absolute',
+          right: 10,
           bottom: 30,
         }}
-        onPress={() => navigation.goBack()}>
-        <Feather name="x" size={30} color="#4764ef" />
+        onPress={applyFilter}>
+        <Feather name="check" size={30} color="green" />
       </TouchableOpacity>
     </View>
   );
@@ -150,7 +150,7 @@ export default function Filter(props) {
 
 const styles = StyleSheet.create({
   section: {
-    width: WIDTH * 0.92,
+    width: WIDTH * 0.7,
     marginBottom: normalization(15),
     paddingTop: normalization(15),
     paddingBottom: normalization(15),

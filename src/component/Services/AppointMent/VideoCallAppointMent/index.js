@@ -41,7 +41,8 @@ const AvailableTime = [
 ];
 
 export default function VideoCallAppointMent(props) {
-  const {navigation} = props;
+  const {navigation, route} = props;
+  const {item} = route.params;
   const [modalVisible, setModalVisible] = useState(false);
 
   const [selectedId, setSelectedId] = useState(null);
@@ -104,7 +105,7 @@ export default function VideoCallAppointMent(props) {
         <Login applyButtonClick={applyButtonClick} />
       </LoginModal>
       <VirtualizedView>
-        <DoctorInformation />
+        <DoctorInformation item={item} />
         <CalenderContainer />
         <View
           style={{

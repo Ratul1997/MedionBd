@@ -18,6 +18,10 @@ import {
 import COLORS from '../../constants/COLORS';
 import normalization from '../../constants/normalization';
 
+import auth from '@react-native-firebase/auth';
+
+import firebase from '@react-native-firebase/app';
+
 export default function Login(props) {
   /*
 
@@ -26,10 +30,55 @@ export default function Login(props) {
   function-
   applyButtonClick: for navigating to next Page
   */
-  const {applyButtonClick} = props;
+  const {applyButtonClick, onSignUp} = props;
 
+  const [confirmResult, setConfirmResult] = useState(null);
+  const [phone, setPhone] = useState('');
+  const [verificationCode, setVerificationCode] = useState('');
+
+  const validatePhoneNumber = phone => {
+    var regexp = /^\+[0-9]?()[0-9](\s|\S)(\d[0-9]{8,16})$/;
+    return regexp.test(phone);
+  };
+
+  const handleSendCode = () => {
+    // Request to send OTP
+    const phoneNew = '+880' + phone;
+
+    if (validatePhoneNumber(phoneNew)) {
+      
+      auth()
+        .signInWithPhoneNumber(phoneNew)
+        .then(confirmResult => {
+          setConfirmResult(confirmResult);
+          console.log(confirmResult);
+        })
+        .catch(error => {
+          alert(error.message);
+          console.log(error);
+        });
+    } else {
+      alert('Invalid Phone Number');
+    }
+  };
+  const handleVerifyCode = () => {
+    // Request for OTP verification
+    if (verificationCode.length == 6) {
+      confirmResult
+        .confirm(verificationCode)
+        .then(user => {
+          alert(`Verified! ${user.uid}`);
+        })
+        .catch(error => {
+          alert(error.message);
+          console.log(error);
+        });
+    } else {
+      alert('Please enter a 6 digit OTP code.');
+    }
+  };
   return (
-    // Mani View 
+    // Mani View
     <View>
       <Image
         style={{margin: normalization(23), alignSelf: 'center'}}
@@ -46,18 +95,20 @@ export default function Login(props) {
         Log in to continue
       </Text>
       <Text style={{marginStart: normalization(10), color: COLORS.textGrey}}>
-        Username or Email
+        Phone Number
       </Text>
       <TextInput
-        placeholder="Username/Email/numer"
+        placeholder="Phone Number"
         style={styles.textInputStyle}
+        value={phone}
+        onChangeText={text => setPhone(text)}
       />
       <Text style={{marginStart: normalization(10), color: COLORS.textGrey}}>
         Password
       </Text>
       <TextInput placeholder="Password" style={styles.textInputStyle} />
 
-      <TouchableOpacity onPress={applyButtonClick} style={styles.logInButton}>
+      <TouchableOpacity onPress={handleSendCode} style={styles.logInButton}>
         <Text
           style={{
             fontSize: normalization(14),
@@ -77,14 +128,16 @@ export default function Login(props) {
           }}>
           Don't have an account!{' '}
         </Text>
-        <Text
-          style={{
-            marginStart: normalization(10),
-            color: COLORS.textlightBlue,
-            fontSize: normalization(13),
-          }}>
-          Sign Up
-        </Text>
+        <TouchableOpacity onPress={onSignUp}>
+          <Text
+            style={{
+              marginStart: normalization(10),
+              color: COLORS.textlightBlue,
+              fontSize: normalization(13),
+            }}>
+            Sign Up
+          </Text>
+        </TouchableOpacity>
       </View>
     </View>
   );

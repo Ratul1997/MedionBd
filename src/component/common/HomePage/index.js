@@ -2,7 +2,7 @@ import React from 'react';
 import {View, StyleSheet, Dimensions} from 'react-native';
 //Colors And Dynamic Screen
 import normalization from '../../../constants/normalization';
-
+import {connect} from 'react-redux';
 import Header from '../../../common/Header';
 import ImageSlider from './ImageSlider';
 import CallingOptions from './CallingOptions';
@@ -13,7 +13,7 @@ import HealthQuestions from '../../../helpers/HealthQuestions';
 
 const HEIGHT = Dimensions.get('window').height;
 
-export default function HomePage(props) {
+function HomePage(props) {
   /*
   Getting properties from navigation
 
@@ -29,6 +29,7 @@ export default function HomePage(props) {
   const openDrawer = () => {
     navigation.openDrawer();
   };
+  console.log(props.userDetails);
   return (
     <View style={{flex: 1}}>
       {/* Header */}
@@ -62,3 +63,11 @@ export default function HomePage(props) {
     </View>
   );
 }
+function mapState(state) {
+  const {userDetails} = state.userReducer;
+  return {userDetails};
+}
+
+const actionCreators = {};
+
+export default connect(mapState, actionCreators)(HomePage);

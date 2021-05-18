@@ -15,8 +15,9 @@ export default function DoctorInformation(props) {
 
   variables-
   accountInformation: accountInformation of Doctor
-  */  
-  const {accountInformation} = props;
+  */
+
+  const {accountInformation, item} = props;
   //render Main View
   return (
     <>
@@ -60,7 +61,11 @@ export default function DoctorInformation(props) {
                   borderColor: '#fff',
                   borderRadius: 100,
                 }}
-                source={require('../../../images/doc.jpg')}
+                source={
+                  item.doctor_image_url
+                    ? item.doctor_image_url
+                    : require('../../../images/doc.jpg')
+                }
               />
             </View>
             <View
@@ -75,19 +80,19 @@ export default function DoctorInformation(props) {
                   fontSize: normalization(18),
                   fontWeight: 'bold',
                 }}>
-                Doctor's Name
+                {item.doctor_name}
               </Text>
               <Text style={{color: '#fff', fontSize: normalization(15)}}>
-                Cardiologist
+                {item.doctor_speciality}
               </Text>
-              <Text style={{color: '#fff', fontSize: normalization(14)}}>
-                MBBS(CMC), BCS(Health), MD(in course)
+              <Text style={{color: '#fff', fontSize: normalization(11)}}>
+                {item.doctor_qualification}
               </Text>
-              <Text style={{color: '#fff', fontSize: normalization(14)}}>
-                Lecturer, Dhaka Medical College
+              <Text style={{color: '#fff', fontSize: normalization(10)}}>
+                {item.doctor_institution}
               </Text>
-              <Text style={{color: '#fff', fontSize: normalization(14)}}>
-                Chamber: Labaid Hospital, Dhaka Medical College
+              <Text style={{color: '#fff', fontSize: normalization(10)}}>
+                Time: {item.startTime}- {item.endTime}
               </Text>
             </View>
           </View>
@@ -102,7 +107,7 @@ export default function DoctorInformation(props) {
               padding: normalization(15),
             }}>
             <Text style={{color: '#19769F', fontSize: normalization(18)}}>
-              Consultation Free: 500 BDT
+              Consultation Free: {item.fee} BDT
             </Text>
           </View>
         </View>

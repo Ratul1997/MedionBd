@@ -32,6 +32,11 @@ import BlogDetails from './component/Blog/BlogDetails';
 import SplashScreen from './SplashScreen';
 import VideoCall from './component/VideoCall';
 import OperateButton from './component/VideoCall/OperateButton';
+import AppointMents from './component/DoctorProfile/AppointMents';
+import DoctorHistory from './component/DoctorProfile/DoctorHistory';
+import Revenue from './component/DoctorProfile/Revenue';
+import CustomDrawerContent from './CustomDrawerContent';
+import Profiles from './common/Profiles';
 
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -109,7 +114,7 @@ const MaterialTabNavigator = () => {
       />
       <MaterialTab.Screen
         name="Profile"
-        component={PatientProfile}
+        component={Profiles}
         options={{
           tabBarLabel: 'Profile',
           tabBarIcon: ({color}) => (
@@ -146,6 +151,8 @@ const HomeStack = () => {
         name="HealthCheckUpDetails"
         component={HealthCheckUpDetails}
       />
+
+      <Stack.Screen name="DoctorProf" component={DoctorProfile} />
     </Stack.Navigator>
   );
 };
@@ -202,8 +209,10 @@ const BlogStack = () => {
 
 const DrawerNav = () => {
   return (
-    <Drawer.Navigator initialRouteName="Video Call">
-      <Drawer.Screen name="Home" component={LogInStack} />
+    <Drawer.Navigator
+      initialRouteName="Home"
+      drawerContent={props => <CustomDrawerContent {...props} />}>
+      <Drawer.Screen name="Home" component={HomeStack} />
       <Drawer.Screen name="Blogs" component={BlogStack} />
       <Drawer.Screen name="Patient Profile" component={PatientProfile} />
       <Drawer.Screen name="Doctor Profile" component={DoctorProfile} />

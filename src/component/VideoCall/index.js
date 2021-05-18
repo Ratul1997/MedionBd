@@ -26,14 +26,16 @@ import {AGORA_API_ID} from '@env';
 
 import requestCameraAndAudioPermission from '../../common/Permission';
 import axios from 'axios';
-import {async} from 'node-stream-zip';
 import OperateButton from './OperateButton';
 import RenderVideo from './RenderVideo';
+import io from 'socket.io-client';
 
 const dimensions = {
   width: Dimensions.get('window').width,
   height: Dimensions.get('window').height,
 };
+
+let socket;
 export default function VideoCall() {
   const [_engine, setEngine] = useState(undefined);
   const [appId, setAppId] = useState(AGORA_API_ID);
@@ -52,7 +54,9 @@ export default function VideoCall() {
   const [isMute, setIsMute] = useState(true);
   const [showVideo, setShowVideo] = useState(true);
   const [isLoadingJoin, setIsLoadingJoin] = useState(false);
+  const [isEnded, setIsEnded] = useState(false);
 
+  const ENDPOINT = 'https://videoallapi.medionbd.com';
   const requestPermission = () => {
     if (Platform.OS === 'android') {
       // Request required permissions from Android
@@ -64,10 +68,26 @@ export default function VideoCall() {
     }
   };
 
+  const defineSOcket = () => {
+    socket = io(ENDPOINT, {
+      transports: ['websocket', 'polling', 'flashsocket'],
+    });
+    socket.emit('ok');
+  };
+
   useEffect(() => {
-    requestPermission();
+    defineSOcket();
     init();
+    requestPermission();
   }, []);
+
+  useEffect(() => {
+    socket.on('endedCall', () => {
+      setIsEnded(true);
+      console.log('ended');
+      endCall();
+    });
+  }, [isEnded]);
   /**
    * @name init
    * @description Function to initialize the Rtc Engine, attach event listeners and actions
@@ -133,7 +153,7 @@ export default function VideoCall() {
   };
 
   const toggleVideo = async () => {
-    console.log(showVideo)
+    console.log(showVideo);
     const newShowVideo = !showVideo;
 
     setShowVideo(newShowVideo);
@@ -149,7 +169,10 @@ export default function VideoCall() {
     console.log('preessed');
     setIsLoading(true);
     axios
-      .post('https://apimedion.medionbd.com/rtcServer', {
+      .post('https://videoallapi.medionbd.com/rtcServer', {
+        headers: {
+          'Content-Type': 'application/json',
+        },
         channelName: tmpuid.toLowerCase(),
       })
       .then(res => {
@@ -161,6 +184,7 @@ export default function VideoCall() {
         startCall(tmpuid.toLowerCase(), res.data.tokens);
       })
       .catch(err => {
+        console.log(err);
         setChannelName('');
         setTmpUid('');
         setIsLoading(false);
@@ -175,6 +199,17 @@ export default function VideoCall() {
     await _engine?.joinChannel(token, channelName, null, 0);
   };
 
+  const sendJoinNotifySocket = () => {
+    socket.emit('join', {channelName: channelName});
+  };
+
+  const sendLeaveNotifySocket = () => {
+    socket.emit('onEndCall', {channelName: channelName});
+  };
+  {
+    joinSucceed && sendJoinNotifySocket();
+  }
+
   /**
    * @name endCall
    * @description Function to end the call
@@ -183,9 +218,12 @@ export default function VideoCall() {
     await _engine?.leaveChannel();
     setPeerIds([]);
     setJoinSucced(false);
-
     setIsLoadingJoin(false);
   };
+
+  // {
+  //   isEnded && endCall();
+  // }
 
   const muteCall = async () => {
     await _engine?.enableLocalAudio(!enabledAudio);

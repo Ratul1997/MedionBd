@@ -24,25 +24,27 @@ export default function DoctorItem(props) {
    * @function: navigate to NormalAppointMent Page
    */
   const navigateNormalAppointMent = () => {
-    navigation.navigate('NormalAppointment');
+    navigation.navigate('NormalAppointment', {
+      item: item,
+    });
   };
   /**
    * @name: navigateVideoCallAppointMent
    * @function: navigate to VideoCallAppointMent Page
    */
   const navigateVideoCallAppointMent = () => {
-    navigation.navigate('VideoCallAppointMent');
+    navigation.navigate('VideoCallAppointMent', {
+      item: item,
+    });
   };
   /**
    * @name: navigateDoctorProfile
    * @function: navigate to DoctorProfile by passing DoctorList title
    */
   const navigateDoctorProfile = () => {
-    navigation.navigate('DoctorStack', {
-      screen: 'DoctorProfile',
-      params: {
-        title: 'DoctorList',
-      },
+    navigation.navigate('DoctorProf', {
+      title: 'DoctorList',
+      item: item,
     });
   };
   return (
@@ -94,16 +96,20 @@ export default function DoctorItem(props) {
               color: '#19769F',
               fontWeight: 'bold',
             }}>
-            {item.name}
+            {item.doctor_name}
           </Text>
-          <Text style={{fontSize: normalization(11), color: '#444547'}}>
-            {item.degree}
+          <Text
+            style={{fontSize: normalization(11), color: '#444547'}}
+            numberOfLines={1}>
+            {item.doctor_qualification}
           </Text>
-          <Text style={{fontSize: normalization(11), color: '#444547'}}>
-            {item.position}
+          <Text
+            style={{fontSize: normalization(11), color: '#444547'}}
+            numberOfLines={1}>
+            {item.doctor_institution}
           </Text>
           <Text style={{fontSize: normalization(11), color: '#011A30'}}>
-            Chamber: {item.chamber}
+            Time: {item.startTime} - {item.endTime}
           </Text>
           <Text style={{fontSize: normalization(10), color: '#071734'}}>
             Consultation Fee: {item.fee} BDT

@@ -16,7 +16,7 @@ const WIDTH = Dimensions.get('window').width;
 export default function DoctorSearch() {
   //render Main View
   return (
-    <View style={{alignItems: 'center'}}>
+    <View style={{alignItems: 'center',}}>
       <InputField text="Doctor, Specialist..." iconName="search" />
       <InputField text="Select Area" iconName="location" />
       <InputField text="Select Date, format: dd/mm/yyyy" iconName="calendar" />

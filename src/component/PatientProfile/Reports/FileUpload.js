@@ -2,14 +2,75 @@
  name: FileUpload
  function: This is a  component for FileUpload
 **/
-import React from 'react';
+import React, {useState} from 'react';
 import {View, Text, TextInput, TouchableOpacity} from 'react-native';
 //Colors And Dynamic Screen
 import COLORS from '../../../constants/COLORS';
 import normalization from '../../../constants/normalization';
 //Vector Icons
 import Feather from 'react-native-vector-icons/Feather';
+import DocumentPicker from 'react-native-document-picker';
+
+import RNFetchBlob from 'rn-fetch-blob';
+import axios from 'axios';
+
 export default function FileUpload() {
+  /**
+   * states-
+   * file - selectedFiles
+   */
+  const [selectedFiles, setSelectedFiles] = useState();
+
+  /**
+   * @name: selectFile
+   * @function: select a file to upload
+   */
+
+  const selectFile = async () => {
+    try {
+      const res = await DocumentPicker.pick({
+        type: [DocumentPicker.types.allFiles],
+      });
+      console.log(res);
+      setSelectedFiles(res);
+    } catch (err) {
+      if (DocumentPicker.isCancel(err)) {
+        // User cancelled the picker, exit any dialogs or menus and move on
+      } else {
+        throw err;
+      }
+    }
+  };
+
+  const upload = () => {
+    // console.log(selectedFiles);
+    // axios
+    //   .post('http://192.168.0.108:3000/upload', {
+    //     headers: {
+    //       'Content-Type': 'multipart/form-data',
+    //     },
+    //     data: selectedFiles,
+    //   })
+    //   .then(resp => {
+    //     // ...
+    //   })
+    //   .catch(err => {
+    //     // ...
+    //   });
+    const data = new FormData();
+    data.append('data', RNFetchBlob.wrap(selectedFiles.uri));
+    RNFetchBlob.fetch('POST', 'http://192.168.0.108:3000/upload', {
+      body: data,
+      'Content-Type': 'multipart/form-data',
+    })
+      .then(resp => {
+        // ...
+      })
+      .catch(err => {
+        // ...
+      });
+  };
+
   return (
     <View
       style={{
@@ -42,6 +103,7 @@ export default function FileUpload() {
             borderRadius: 50,
             marginBottom: normalization(10),
           }}
+          onPress={upload}
         />
         <TouchableOpacity
           style={{
@@ -49,7 +111,8 @@ export default function FileUpload() {
             paddingHorizontal: normalization(20),
             backgroundColor: COLORS.deepBlueHeader,
             borderRadius: normalization(10),
-          }}>
+          }}
+          onPress={selectFile}>
           <Text style={{color: COLORS.textWhite, fontSize: 16}}>
             Choose File
           </Text>

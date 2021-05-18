@@ -120,7 +120,7 @@ export default function OperateButton(props) {
             }}
             onPress={endCall}>
             <Text style={{fontSize: normalization(15), color: 'white'}}>
-              Leave Channel
+              Leave Call
             </Text>
           </TouchableOpacity>
           <TouchableOpacity

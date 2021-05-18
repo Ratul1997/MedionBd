@@ -6,11 +6,32 @@
 import React, {useState} from 'react';
 import {View, Text, TextInput, StyleSheet} from 'react-native';
 import {Picker} from '@react-native-community/picker';
+import {connect} from 'react-redux';
 //Colors And Dynamic Screen
 import COLORS from '../../../../constants/COLORS';
 import normalization from '../../../../constants/normalization';
-
-export default function PatientInformation() {
+import {userConstants} from '../../../../constants/userConstants';
+import {
+  Menu,
+  MenuOptions,
+  MenuOption,
+  MenuTrigger,
+} from 'react-native-popup-menu';
+function PatientInformation(props) {
+  const {
+    storedata,
+    patient_name,
+    setPatient_Name,
+    patient_age,
+    setPatient_Age,
+    patient_gender,
+    setPatient_Gender,
+    patient_phone_number,
+    setPatient_phone_number,
+    normalAppointMent,
+    preferredTime,
+    setPreferredTime,
+  } = props;
   /**
    * States:
    */
@@ -20,6 +41,7 @@ export default function PatientInformation() {
   const [selectedValue3, setSelectedValue3] = useState('');
   const [selectedValue4, setSelectedValue4] = useState('');
 
+  console.log(patient_gender);
   //Dummy Time data
   const timeData = [
     {id: '1', title: '9:30 AM'},
@@ -41,36 +63,55 @@ export default function PatientInformation() {
   return (
     <View style={{width: '100%', padding: 15}}>
       <Text style={{marginStart: 10, color: '#979A9A'}}>Patient Name</Text>
-      <TextInput placeholder="Name" style={styles.refId} />
+      <TextInput
+        placeholder="Name"
+        style={styles.refId}
+        value={patient_name}
+        onChangeText={text => setPatient_Name(text)}
+      />
       <Text style={{marginStart: 10, color: '#979A9A'}}>Patient Age</Text>
-      <TextInput placeholder="Age" style={styles.refId} />
+      <TextInput
+        placeholder="Age"
+        style={styles.refId}
+        value={patient_age}
+        onChangeText={text => setPatient_Age(text)}
+      />
       <Text style={{marginStart: 10, color: '#979A9A'}}>Patient Gender</Text>
-      <View style={styles.picker}>
-        <Picker
-          selectedValue={selectedValue1}
-          style={{color: '#979A9A'}}
-          onValueChange={(itemValue, itemIndex) =>
-            setSelectedValue1(itemValue)
-          }>
-          <Picker.Item label="Female" value="Female" />
-          <Picker.Item label="Male" value="Male" />
-        </Picker>
-      </View>
+      {/* <View style={styles.picker}> */}
+      <Menu>
+        <MenuTrigger
+          text={patient_gender ? patient_gender : 'Select Gender'}
+          style={[styles.refId, {color: '#979A9A'}]}
+        />
+        <MenuOptions>
+          <MenuOption onSelect={() => setPatient_Gender('Male')} text="Male" />
+          <MenuOption
+            onSelect={() => setPatient_Gender('Female')}
+            text="Female"
+          />
+        </MenuOptions>
+      </Menu>
       <Text style={{marginStart: 10, color: '#979A9A'}}>Patient Phone</Text>
-      <TextInput placeholder="phone Number" style={styles.refId} />
-      <Text style={{marginStart: 10, color: '#979A9A'}}>Patient Type</Text>
-      <View style={styles.picker}>
-        <Picker
-          selectedValue={selectedValue2}
-          style={{color: '#979A9A'}}
-          onValueChange={(itemValue, itemIndex) =>
-            setSelectedValue2(itemValue)
-          }>
-          <Picker.Item label="New" value="New" />
-          <Picker.Item label="Old" value="Old" />
-        </Picker>
-      </View>
-      <Text style={{marginStart: 10, color: '#979A9A'}}>Select Chamber</Text>
+      <TextInput
+        placeholder="phone Number"
+        style={styles.refId}
+        value={patient_phone_number}
+        onChangeText={text => setPatient_phone_number(text)}
+      />
+      {normalAppointMent && (
+        <>
+          <Text style={{marginStart: 10, color: '#979A9A'}}>
+            Preferred Time:
+          </Text>
+          <TextInput
+            placeholder="ex: 9am/9:30am"
+            style={styles.refId}
+            value={preferredTime}
+            onChangeText={text => setPreferredTime(text)}
+          />
+        </>
+      )}
+      {/* <Text style={{marginStart: 10, color: '#979A9A'}}>Select Chamber</Text>
       <View style={styles.picker}>
         <Picker
           selectedValue={selectedValue3}
@@ -83,19 +124,7 @@ export default function PatientInformation() {
           ))}
         </Picker>
       </View>
-      <Text style={{marginStart: 10, color: '#979A9A'}}>Select Date</Text>
-      <View style={styles.picker}>
-        <Picker
-          selectedValue={selectedValue4}
-          style={{color: '#979A9A'}}
-          onValueChange={(itemValue, itemIndex) =>
-            setSelectedValue4(itemValue)
-          }>
-          {dateData.map(acct => (
-            <Picker.Item key={acct.id} label={acct.title} value={acct.id} />
-          ))}
-        </Picker>
-      </View>
+
       <Text style={{marginStart: 10, color: '#979A9A'}}>Select Time</Text>
       <View style={styles.picker}>
         <Picker
@@ -106,7 +135,7 @@ export default function PatientInformation() {
             <Picker.Item key={acct.id} label={acct.title} value={acct.id} />
           ))}
         </Picker>
-      </View>
+      </View> */}
     </View>
   );
 }
@@ -130,3 +159,14 @@ const styles = StyleSheet.create({
     marginEnd: '2%',
   },
 });
+
+function mapState(state) {
+  const {userDetails} = state.userReducer;
+  return {userDetails};
+}
+
+const actionCreators = {
+  storedata: user => dispatch =>
+    dispatch({type: userConstants.STORE_USER_DETAILS, user}),
+};
+export default connect(mapState, actionCreators)(PatientInformation);
