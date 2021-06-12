@@ -13,12 +13,12 @@ import EvilIcons from 'react-native-vector-icons/EvilIcons';
 export default function InputField(props) {
   /**
    * Getting properties from navigation
-   * 
-   * variables: 
+   *
+   * variables:
    * text: PlaceHolderText (string)
    * iconName: iconName (string)
    */
-  const {text, iconName} = props;
+  const {text, iconName, onChangeText, value} = props;
   return (
     <View
       style={{
@@ -37,6 +37,8 @@ export default function InputField(props) {
       <TextInput
         style={{padding: normalization(5), fontSize: 16}}
         placeholder={text}
+        value={value}
+        onChangeText={onChangeText}
       />
     </View>
   );

@@ -5,6 +5,7 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {createDrawerNavigator} from '@react-navigation/drawer';
 import {createMaterialBottomTabNavigator} from '@react-navigation/material-bottom-tabs';
 import {useTheme} from '@react-navigation/native';
+import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
 
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import COLORS from './constants/COLORS';
@@ -37,11 +38,34 @@ import DoctorHistory from './component/DoctorProfile/DoctorHistory';
 import Revenue from './component/DoctorProfile/Revenue';
 import CustomDrawerContent from './CustomDrawerContent';
 import Profiles from './common/Profiles';
+import DoctorSignUp from './component/Auth/DoctorSignUp';
+import Login from './component/Auth/Login';
+import LoginDoc from './component/Doctor/Auth/LoginDoc';
+import HomePageDoc from './component/Doctor/HomePageDoc';
+import DocHistory from './component/Doctor/DocHistory';
+import Prescription from './component/Doctor/Prescription';
+import RXComponent from './component/Doctor/Prescription/RX/RXComponent';
+import Advices from './component/Doctor/Prescription/Advice/Advices';
+import AdviceComponent from './component/Doctor/Prescription/Advice/AdviceComponent';
+import FollowUpComponent from './component/Doctor/Prescription/FollowUp/FollowUpComponent';
+import CheifComplaint from './component/Doctor/Prescription/CheifComplaint';
+import CheifComplaintComponent from './component/Doctor/Prescription/CheifComplaint/CheifComplaintComponent';
+import HistoryComponent from './component/Doctor/Prescription/History/HistoryComponent';
+import DiagnosisComponent from './component/Doctor/Prescription/Diagnosis/DiagnosisComponent';
+import OnExaminationComponent from './component/Doctor/Prescription/OnExamination/OnExaminationComponent';
+import InvestigationComponent from './component/Doctor/Prescription/Investigation/InvestigationComponent';
+import AllPurposeHeader from './common/AllPurposeHeader';
+import OnlineApointMents from './component/PatientProfile/History/OnlineApointMents';
+import OfflineAppointMents from './component/PatientProfile/History/OfflineAppointMents';
+import Answered from './component/HealthQuestions/Feed/Answered';
+import Approved from './component/HealthQuestions/Feed/Approved';
+import GoogleMap from './component/GoogleMap';
 
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
 const MaterialTab = createMaterialBottomTabNavigator();
 
+const Tab = createMaterialTopTabNavigator();
 const Home = () => {
   const {colors} = useTheme();
   console.log(colors);
@@ -114,7 +138,7 @@ const MaterialTabNavigator = () => {
       />
       <MaterialTab.Screen
         name="Profile"
-        component={Profiles}
+        component={PatientStack}
         options={{
           tabBarLabel: 'Profile',
           tabBarIcon: ({color}) => (
@@ -125,7 +149,33 @@ const MaterialTabNavigator = () => {
     </MaterialTab.Navigator>
   );
 };
+function PatientHistory(props) {
+  const {navigation} = props;
+  const onBackNavigate = () => {
+    navigation.goBack();
+  };
+  return (
+    <>
+      <AllPurposeHeader title="History" onBackNavigate={onBackNavigate} />
+      <Tab.Navigator>
+        <Tab.Screen
+          name="Offline AppointMents"
+          component={OfflineAppointMents}
+        />
+        <Tab.Screen name="Online AppointMents" component={OnlineApointMents} />
+      </Tab.Navigator>
+    </>
+  );
+}
+const AnswerTab = () => {
+  return (
+    <Tab.Navigator>
+      <Tab.Screen name="NewsFeed" component={Answered} />
 
+      <Tab.Screen name="My Questions" component={Approved} />
+    </Tab.Navigator>
+  );
+};
 const HomeStack = () => {
   return (
     <Stack.Navigator
@@ -145,7 +195,8 @@ const HomeStack = () => {
       <Stack.Screen name="DoctorList" component={DoctorList} />
       <Stack.Screen name="AskQuestion" component={AskQuestion} />
       <Stack.Screen name="Filter" component={Filter} />
-      <Stack.Screen name="Feed" component={Feed} />
+      <Stack.Screen name="Feed" component={AnswerTab} />
+      <Stack.Screen name="Video Call" component={VideoCall} />
       <Stack.Screen name="HealthCheckUp" component={HealthCheckUp} />
       <Stack.Screen
         name="HealthCheckUpDetails"
@@ -170,9 +221,10 @@ const DoctorStack = () => {
 const PatientStack = () => {
   return (
     <Stack.Navigator screenOptions={{headerShown: false}}>
+      <Stack.Screen name="PatientProfile" component={Profiles} />
       <Stack.Screen name="MedicineReminder" component={MedicineReminder} />
       <Stack.Screen name="PatientReports" component={Reports} />
-      <Stack.Screen name="History" component={History} />
+      <Stack.Screen name="History" component={PatientHistory} />
       <Stack.Screen
         name="VideoCallingAppointment"
         component={VideoCallingAppointment}
@@ -201,22 +253,53 @@ const BlogStack = () => {
     <Stack.Navigator
       initialRouteName="HomeStack"
       screenOptions={{headerShown: false}}>
-      <Drawer.Screen name="Blog" component={Blog} />
+      <Stack.Screen name="Blog" component={Blog} />
       <Stack.Screen name="BlogDetails" component={BlogDetails} />
     </Stack.Navigator>
   );
 };
 
+const PrescriptionStack = () => {
+  return (
+    <Stack.Navigator
+      initialRouteName="Prescription"
+      screenOptions={{headerShown: false}}>
+      <Stack.Screen name="Prescription" component={Prescription} />
+      <Stack.Screen name="Medicines" component={RXComponent} />
+      <Stack.Screen name="Advices" component={AdviceComponent} />
+      <Stack.Screen name="Follow" component={FollowUpComponent} />
+      <Stack.Screen name="Complaints" component={CheifComplaintComponent} />
+      <Stack.Screen name="History" component={HistoryComponent} />
+      <Stack.Screen name="Diagnosis" component={DiagnosisComponent} />
+      <Stack.Screen name="OnExamination" component={OnExaminationComponent} />
+      <Stack.Screen name="Inv" component={InvestigationComponent} />
+    </Stack.Navigator>
+  );
+};
+
+const DoctorLoginStack = () => {
+  return (
+    <Stack.Navigator
+      initialRouteName="Login"
+      screenOptions={{headerShown: false}}>
+      <Stack.Screen name="Login" component={LoginDoc} />
+      <Stack.Screen name="DoctorRevenue" component={Revenue} />
+      <Stack.Screen name="AppointMents" component={AppointMents} />
+      <Stack.Screen name="SignUp" component={DoctorSignUp} />
+      <Stack.Screen name="DocHome" component={HomePageDoc} />
+      <Stack.Screen name="DocHistory" component={DocHistory} />
+      <Stack.Screen name="PresCriptionStack" component={PrescriptionStack} />
+    </Stack.Navigator>
+  );
+};
 const DrawerNav = () => {
   return (
     <Drawer.Navigator
-      initialRouteName="Home"
+      initialRouteName="Prescription"
       drawerContent={props => <CustomDrawerContent {...props} />}>
       <Drawer.Screen name="Home" component={HomeStack} />
       <Drawer.Screen name="Blogs" component={BlogStack} />
-      <Drawer.Screen name="Patient Profile" component={PatientProfile} />
-      <Drawer.Screen name="Doctor Profile" component={DoctorProfile} />
-      <Drawer.Screen name="Video Call" component={VideoCall} />
+      <Drawer.Screen name="Google Map" component={GoogleMap} />
     </Drawer.Navigator>
   );
 };

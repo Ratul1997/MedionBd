@@ -41,7 +41,6 @@ function PatientInformation(props) {
   const [selectedValue3, setSelectedValue3] = useState('');
   const [selectedValue4, setSelectedValue4] = useState('');
 
-  console.log(patient_gender);
   //Dummy Time data
   const timeData = [
     {id: '1', title: '9:30 AM'},

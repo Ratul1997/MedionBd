@@ -11,16 +11,16 @@ import COLORS from '../../../constants/COLORS';
 import FontIso from 'react-native-vector-icons/Fontisto';
 import IonIcons from 'react-native-vector-icons/Ionicons';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
-export default function CallingOptions() {
+export default function CallingOptions(props) {
+  const {onNavigation, onCallButton} = props;
   return (
-    // Main View 
+    // Main View
     <View
       style={{
         marginHorizontal: normalization(15),
         width: '80%',
-        alignSelf:'center',
+        alignSelf: 'center',
       }}>
-
       {/* For Phone Call */}
       <TouchableOpacity
         style={{
@@ -35,7 +35,8 @@ export default function CallingOptions() {
           alignItems: 'center',
           padding: normalization(5),
           justifyContent: 'space-evenly',
-        }}>
+        }}
+        onPress={onCallButton}>
         {/* Doctor Icon */}
         <FontAwesome name="user-md" color="#029128" size={normalization(25)} />
         <Text
@@ -63,7 +64,7 @@ export default function CallingOptions() {
         </View>
       </TouchableOpacity>
 
-       {/* For Doctor AppointMent */}
+      {/* For Doctor AppointMent */}
       <TouchableOpacity
         style={{
           marginBottom: normalization(10),
@@ -77,7 +78,8 @@ export default function CallingOptions() {
           alignItems: 'center',
           padding: normalization(5),
           justifyContent: 'space-evenly',
-        }}>
+        }}
+        onPress={onNavigation}>
         {/* Doctor Icon */}
         <FontIso name="doctor" color="#023E73" size={normalization(25)} />
         <Text

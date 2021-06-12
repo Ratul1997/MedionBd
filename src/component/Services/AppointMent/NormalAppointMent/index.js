@@ -4,7 +4,7 @@
 **/
 
 import React, {useState, useEffect} from 'react';
-import {View, Text, ScrollView} from 'react-native';
+import {View, Text, ScrollView, TouchableOpacity} from 'react-native';
 
 import AllPurposeHeader from '../../../../common/AllPurposeHeader';
 import DoctorInformation from '../DoctorInformation';
@@ -18,6 +18,16 @@ import axios from 'axios';
 import {BASE_URL, BASE_URL_FINAL} from '@env';
 import ActivityIndicatorComponent from '../../../../common/ActivityIndicatorComponent';
 import ModalComponent from '../../../../common/ModalComponent';
+import {FlatList} from 'react-native-gesture-handler';
+import VirtualizedView from '../../../../common/VirtualizedView';
+import COLORS from '../../../../constants/COLORS';
+import normalization from '../../../../constants/normalization';
+import firestore from '@react-native-firebase/firestore';
+import {
+  checkCurrenDate,
+  convertNumberToDay,
+  getSelectedDate,
+} from '../../../../constants/calcuationdata';
 
 function NormalAppointMent(props) {
   /*
@@ -35,7 +45,7 @@ function NormalAppointMent(props) {
     route,
   } = props;
 
-  const {item} = route.params;
+  const {item, title} = route.params;
   /**
    * States-
    * modalVisible: for showing modal
@@ -47,6 +57,9 @@ function NormalAppointMent(props) {
   const [patient_phone_number, setPatient_phone_number] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [preferredTime, setPreferredTime] = useState('');
+  const [weekDays, setWeekDays] = useState(item.doctor_day.split(','));
+  const [selectedId, setSelectedId] = useState('');
+
   useEffect(() => {
     if (loggedIn) {
       const {
@@ -132,9 +145,12 @@ function NormalAppointMent(props) {
    * @function: navigate to Confirmation Page
    */
   const applyButtonClick = () => {
+    // const c = item.connect_number.replace(/\+/g, '');
     navigation.navigate('Confirmation', {
       name: item.doctor_name,
       time: preferredTime,
+      selectedDay: convertNumberToDay(parseInt(selectedId)),
+      docName: patient_phone_number + item.contact_number,
     });
   };
 
@@ -146,15 +162,18 @@ function NormalAppointMent(props) {
   const bookAppointMnet = userDetails => {
     setModalVisible(true);
     setIsLoading(true);
-    console.log(userDetails);
 
-    const url = BASE_URL_FINAL + 'bookoffline';
+    const urlEnd = title === 'Online' ? 'bookonline' : 'bookoffline';
+
+    const url = BASE_URL_FINAL + urlEnd;
+    console.log(item);
     axios
       .post(url, {
-        iddoctors: item.iddoctors,
+        iddoctors: title === 'Online' ? item.idonlinedoctors : item.iddoctors,
         idpatients: userDetails.userId,
         preferredTime: preferredTime,
         status: 1,
+        selectedDay: getSelectedDate(parseInt(selectedId)),
       })
       .then(res => {
         setModalVisible(false);
@@ -167,7 +186,32 @@ function NormalAppointMent(props) {
       });
   };
 
-  console.log(item);
+  const onSelectedDays = value => () => {
+    console.log(value);
+
+    setSelectedId(value);
+  };
+  const renderDay = ({item, index}) => {
+    const backgroundColor = item === selectedId ? '#19769F' : '#fff';
+    const color = item === selectedId ? '#fff' : '#19769F';
+
+    return (
+      <TouchableOpacity
+        style={{
+          borderWidth: 1,
+          borderColor: COLORS.deepBlueHeader,
+          height: normalization(50),
+          width: normalization(50),
+          marginHorizontal: normalization(5),
+          justifyContent: 'center',
+          alignItems: 'center',
+          backgroundColor,
+        }}
+        onPress={onSelectedDays(item)}>
+        <Text style={{color}}>{convertNumberToDay(parseInt(item))}</Text>
+      </TouchableOpacity>
+    );
+  };
   //rendering Main Viewidpatientsidpatients
   return (
     <>
@@ -199,6 +243,13 @@ function NormalAppointMent(props) {
           normalAppointMent
           preferredTime={preferredTime}
           setPreferredTime={setPreferredTime}
+        />
+        <FlatList
+          data={weekDays}
+          horizontal={true}
+          renderItem={renderDay}
+          keyExtractor={item => item}
+          style={{margin: normalization(10)}}
         />
         <AppointMentsFooter title="Confirm Schedule" onConfirm={onConfirm} />
       </ScrollView>

@@ -18,7 +18,7 @@ export default function DoctorItem(props) {
   item: doctor Information (Object)
   navigation: navigation properties
   */
-  const {item, navigation, index} = props;
+  const {item, navigation, index, title} = props;
   /**
    * @name: navigateNormalAppointMent
    * @function: navigate to NormalAppointMent Page
@@ -26,6 +26,7 @@ export default function DoctorItem(props) {
   const navigateNormalAppointMent = () => {
     navigation.navigate('NormalAppointment', {
       item: item,
+      title: 'Offline',
     });
   };
   /**
@@ -33,8 +34,9 @@ export default function DoctorItem(props) {
    * @function: navigate to VideoCallAppointMent Page
    */
   const navigateVideoCallAppointMent = () => {
-    navigation.navigate('VideoCallAppointMent', {
+    navigation.navigate('NormalAppointment', {
       item: item,
+      title: 'Online',
     });
   };
   /**
@@ -59,35 +61,27 @@ export default function DoctorItem(props) {
         marginBottom: 10,
         flexDirection: 'row',
       }}>
-      <View
-        style={{flex: 0.35, justifyContent: 'center', alignItems: 'center'}}>
+      <TouchableOpacity
+        style={{flex: 0.35, justifyContent: 'center', alignItems: 'center'}}
+        onPress={navigateDoctorProfile}>
         <Image
           style={{height: '63.63%', width: normalization(70), borderRadius: 10}}
           source={require('../../../images/doc.jpg')}
         />
         <TouchableOpacity
           style={{
-            backgroundColor: '#F5F6F8',
+            // backgroundColor: '#F5F6F8',
             width: normalization(70),
             height: normalization(18),
             marginTop: normalization(5),
             justifyContent: 'center',
             alignItems: 'center',
             borderRadius: 5,
-            borderWidth: 1,
-            borderColor: '#979A9A',
+            // borderWidth: 1,
+            // borderColor: '#979A9A',
           }}
-          onPress={navigateDoctorProfile}>
-          <Text
-            style={{
-              color: '#03318C',
-              fontSize: normalization(12),
-              fontWeight: 'bold',
-            }}>
-            See Profile
-          </Text>
-        </TouchableOpacity>
-      </View>
+        />
+      </TouchableOpacity>
       <View style={{flex: 0.8, justifyContent: 'center'}}>
         <View style={{height: normalization(70)}}>
           <Text
@@ -115,11 +109,16 @@ export default function DoctorItem(props) {
             Consultation Fee: {item.fee} BDT
           </Text>
         </View>
-        <View style={{flexDirection: 'row'}}>
-          <TouchableOpacity
+        <View
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'flex-end',
+            alignItems: 'flex-end',
+          }}>
+          {/* <TouchableOpacity
             style={{
               backgroundColor: '#F5F6F8',
-              width: '45%',
+              width: normalization(90),
               marginEnd: normalization(10),
               height: normalization(18),
               marginTop: normalization(5),
@@ -138,11 +137,11 @@ export default function DoctorItem(props) {
               }}>
               Appointment
             </Text>
-          </TouchableOpacity>
+          </TouchableOpacity> */}
           <TouchableOpacity
             style={{
               backgroundColor: '#F5F6F8',
-              width: '45%',
+              width: normalization(90),
               marginEnd: normalization(10),
               height: normalization(18),
               marginTop: normalization(5),
@@ -152,14 +151,18 @@ export default function DoctorItem(props) {
               borderWidth: 1,
               borderColor: '#979A9A',
             }}
-            onPress={navigateVideoCallAppointMent}>
+            onPress={() => {
+              title === 'Online'
+                ? navigateVideoCallAppointMent()
+                : navigateNormalAppointMent();
+            }}>
             <Text
               style={{
                 color: '#03318C',
                 fontSize: normalization(12),
                 fontWeight: 'bold',
               }}>
-              Book Video Call
+              {title === 'Online' ? 'Book Call' : 'Book'}
             </Text>
           </TouchableOpacity>
         </View>

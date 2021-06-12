@@ -7,6 +7,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {PersistGate} from 'redux-persist/lib/integration/react';
 import userReducer from './userReducer';
 import authReducer from './authReducer';
+import docAuthReducer from './docAuthReducer';
+import prescriptionReducer from './prescriptionReducer'
 const persistConfig = {
   key: 'root',
   storage: AsyncStorage,
@@ -16,6 +18,8 @@ const persistConfig = {
 const allReducers = combineReducers({
   userReducer,
   authReducer,
+  docAuthReducer,
+  prescriptionReducer
 });
 export const pReducer = persistReducer(persistConfig, allReducers);
 export const store = createStore(pReducer, applyMiddleware(thunk));

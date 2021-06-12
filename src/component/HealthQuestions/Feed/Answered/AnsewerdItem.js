@@ -3,7 +3,7 @@
  function: This is a  component for AnsewerdItem
 **/
 import * as React from 'react';
-import {View, Text, StyleSheet} from 'react-native';
+import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
 
 //Colors And Dynamic Screen
 import COLORS from '../../../../constants/COLORS';
@@ -17,6 +17,7 @@ export default function AnsewerdItem(props) {
   item: an item of Answered List (Obeject)
   */
   const {item} = props;
+  const onComment = () => {};
   return (
     <View
       style={{
@@ -25,16 +26,17 @@ export default function AnsewerdItem(props) {
         padding: normalization(13),
       }}>
       <Text style={{fontSize: normalization(16), fontWeight: 'bold'}}>
-        {item.patient}{' '}
+        {item.patient_name}{' '}
       </Text>
       <Text style={{fontSize: normalization(14)}}>{item.date}</Text>
       <Text style={{fontSize: normalization(15), color: '#19769F'}}>
-        {item.que}
+        {item.questions}
       </Text>
-      <Text style={{fontSize: normalization(16)}}>Answer: {item.ans}</Text>
-      <Text style={{fontSize: normalization(16), fontWeight: 'bold'}}>
-        by {item.doctor}
-      </Text>
+      <TouchableOpacity
+        onPress={onComment}
+        style={{position: 'absolute', right: 10, bottom: 10}}>
+        <Text style={{color: COLORS.deepBlueHeader}}>Comments</Text>
+      </TouchableOpacity>
     </View>
   );
 }

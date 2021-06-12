@@ -31,7 +31,10 @@ export default function DoctorList(props) {
   variables-
   navigation: navigation properties
   */
-  const {navigation} = props;
+  const {navigation, route} = props;
+  const {title} = route.params;
+
+  console.log(title);
 
   /**
    * States-
@@ -60,12 +63,16 @@ export default function DoctorList(props) {
    */
   const loadData = async () => {
     try {
-      const doctorData = await axios.get(BASE_URL_FINAL + 'doctor-list', {
+      const urlend = title === 'Online' ? 'online-doctor-list' : 'doctor-list';
+      const url = BASE_URL_FINAL + urlend;
+      console.log(url);
+      const doctorData = await axios.post(url, {
         page: page,
       });
       const {doctors, page_number} = doctorData.data;
       console.log(doctors);
       setDoctorList([...doctorList, ...doctorData.data.doctors]);
+      setPage(page + 1);
       setIsInitialDataFetching(false);
       setIsDataFetching(false);
     } catch (err) {
@@ -107,7 +114,6 @@ export default function DoctorList(props) {
 
   const loadMore = () => {
     setIsDataFetching(true);
-    setPage(page + 1);
     loadData();
   };
 
@@ -179,7 +185,12 @@ export default function DoctorList(props) {
             </View>
           )}
           renderItem={({item, index}) => (
-            <DoctorItem item={item} index={index} navigation={navigation} />
+            <DoctorItem
+              item={item}
+              index={index}
+              navigation={navigation}
+              title={title}
+            />
           )}
           ListFooterComponent={() =>
             isDataFetching ? (

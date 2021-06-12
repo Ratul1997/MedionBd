@@ -2,13 +2,14 @@
  name: AskQuestion
  function: This is a  component for AskQuestion
 **/
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   View,
   Text,
   StyleSheet,
   TextInput,
   TouchableOpacity,
+  ScrollView,
 } from 'react-native';
 
 //Colors And Dynamic Screen
@@ -20,15 +21,23 @@ import AllPurposeHeader from '../../../common/AllPurposeHeader';
 import VirtualizedView from '../../../common/VirtualizedView';
 // Vector Icons
 import AntDesign from 'react-native-vector-icons/AntDesign';
-
-export default function AskQuestion(props) {
+import axios from 'axios';
+import {BASE_URL_FINAL} from '@env';
+import {connect} from 'react-redux';
+import {userConstants} from '../../../constants/userConstants';
+import ActivityIndicatorComponent from '../../../common/ActivityIndicatorComponent';
+function AskQuestion(props) {
   /*
   Getting properties from navigation
 
   variables-
   navigation: navigation properties
   */
-  const {navigation} = props;
+  const {navigation, loggedIn, userDetails} = props;
+
+  const [questions, setQuestions] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+
   /**
    * @name: onBackNavigate
    * @function: navigating Back
@@ -36,13 +45,36 @@ export default function AskQuestion(props) {
   const onBackNavigate = () => {
     navigation.goBack();
   };
+  const submittedQuestion = () => {
+    if (loggedIn) {
+      const url = BASE_URL_FINAL + 'ask-question';
+      console.log(userDetails);
+      setIsLoading(true);
+      axios
+        .post(url, {
+          idpatients: userDetails.userId,
+          questions: questions,
+          date: new Date(),
+        })
+        .then(res => {
+          setIsLoading(false);
+          alert('Your question has been posted');
+        })
+        .catch(err => {
+          setIsLoading(false);
+          alert('Something went wrong');
+        });
+    } else {
+      alert('You have to log in first');
+    }
+  };
   return (
     <View style={{flex: 1, backgroundColor: COLORS.DoctorAppnt_Background}}>
       <AllPurposeHeader
         title="Ask A Question"
         onBackNavigate={onBackNavigate}
       />
-      <VirtualizedView style={{margin: normalization(10)}}>
+      <ScrollView contentContainerStyle={{margin: normalization(10)}}>
         <Text
           style={{
             color: '#19769F',
@@ -77,29 +109,27 @@ export default function AskQuestion(props) {
             borderWidth: 1,
             borderRadius: 15,
           }}>
-          <Text style={styles.name_emailStyle}>Name:</Text>
-          <TextInput
-            style={styles.name_emailInput}
-            placeholder="Enter your Name"
-          />
-          <Text style={styles.name_emailStyle}>Email:</Text>
-          <TextInput
-            style={styles.name_emailInput}
-            placeholder="address@gmail.com"
-          />
           <Text style={styles.name_emailStyle}>Question:</Text>
           <TextInput
             multiline={true}
             numberOfLines={15}
             maxLength={2000}
             style={styles.quesInputStyle}
+            value={questions}
             placeholder="Enter your question here"
+            onChangeText={text => setQuestions(text)}
           />
 
-          <TouchableOpacity style={styles.submitButton}>
-            <Text style={{fontSize: normalization(16), color: '#fff'}}>
-              Submit
-            </Text>
+          <TouchableOpacity
+            style={styles.submitButton}
+            onPress={isLoading ? null : submittedQuestion}>
+            {isLoading ? (
+              <ActivityIndicatorComponent size="small" color="white" />
+            ) : (
+              <Text style={{fontSize: normalization(16), color: '#fff'}}>
+                Submit
+              </Text>
+            )}
           </TouchableOpacity>
         </View>
 
@@ -109,13 +139,14 @@ export default function AskQuestion(props) {
             flexDirection: 'row',
             alignSelf: 'flex-end',
             alignItems: 'center',
+            marginBottom: normalization(20),
           }}>
           <Text style={{fontSize: normalization(15), color: '#19769F'}}>
             View News Feed{' '}
           </Text>
           <AntDesign name="arrowright" size={20} color="#19769F" />
         </TouchableOpacity>
-      </VirtualizedView>
+      </ScrollView>
     </View>
   );
 }
@@ -154,3 +185,14 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
 });
+function mapState(state) {
+  const {userDetails} = state.userReducer;
+  const {loggedIn} = state.authReducer;
+  return {userDetails, loggedIn};
+}
+const actionCreators = {
+  storedata: user => dispatch =>
+    dispatch({type: userConstants.STORE_USER_DETAILS, user}),
+  loggedInReq: () => dispatch => dispatch({type: userConstants.LOGIN_SUCCESS}),
+};
+export default connect(mapState, actionCreators)(AskQuestion);

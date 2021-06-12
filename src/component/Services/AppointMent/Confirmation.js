@@ -2,7 +2,7 @@
  name: Confirmation
  function: This is a component for Confirmation
 **/
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {View, Text, TouchableOpacity} from 'react-native';
 // Colors And Dynamic Screen
 import COLORS from '../../../constants/COLORS';
@@ -10,6 +10,8 @@ import normalization from '../../../constants/normalization';
 //Vector Icons
 import AntDesign from 'react-native-vector-icons/AntDesign';
 
+import firestore from '@react-native-firebase/firestore';
+import messaging from '@react-native-firebase/messaging';
 export default function Confirmation(props) {
   /*
   Getting properties from navigation
@@ -18,8 +20,17 @@ export default function Confirmation(props) {
   navigation: navigation properties
   */
   const {navigation, route} = props;
-  const {name, time} = route.params;
-  console.log(props)
+  const {name, time, selectedDay, docName} = route.params;
+
+  console.log(docName);
+
+  useEffect(() => {
+    const docNames = docName.replace(/\+/g, '')
+    messaging()
+      .subscribeToTopic(docNames)
+      .then(() => console.log('Subscribed to topic!'));
+  }, []);
+
   return (
     <View style={{flex: 1, backgroundColor: COLORS.DoctorAppnt_Background}}>
       <TouchableOpacity
@@ -41,7 +52,7 @@ export default function Confirmation(props) {
           Your appointment with {name} has been confirmed on
         </Text>
         <Text style={{textAlign: 'center', fontSize: normalization(18)}}>
-          {time}
+          {selectedDay} at {time}
         </Text>
       </View>
     </View>

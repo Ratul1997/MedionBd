@@ -36,7 +36,10 @@ const dimensions = {
 };
 
 let socket;
-export default function VideoCall() {
+export default function VideoCall(props) {
+  const {navigation, route} = props;
+  const {channel, type, patient, doctor} = route.params;
+  console.log(channel, type);
   const [_engine, setEngine] = useState(undefined);
   const [appId, setAppId] = useState(AGORA_API_ID);
   const [token, setToken] = useState('');
@@ -45,7 +48,7 @@ export default function VideoCall() {
   const [joinSucceed, setJoinSucced] = useState(false);
   const [peerIds, setPeerIds] = useState([]);
   const [isVisible, setIsVisible] = useState(true);
-  const [tmpuid, setTmpUid] = useState('');
+  const [tmpuid, setTmpUid] = useState(channel);
   const [enabledAudio, setEnableAudio] = useState(false);
   const [enabledVideo, setEnableVideo] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
@@ -68,26 +71,11 @@ export default function VideoCall() {
     }
   };
 
-  const defineSOcket = () => {
-    socket = io(ENDPOINT, {
-      transports: ['websocket', 'polling', 'flashsocket'],
-    });
-    socket.emit('ok');
-  };
-
   useEffect(() => {
-    defineSOcket();
     init();
     requestPermission();
   }, []);
 
-  useEffect(() => {
-    socket.on('endedCall', () => {
-      setIsEnded(true);
-      console.log('ended');
-      endCall();
-    });
-  }, [isEnded]);
   /**
    * @name init
    * @description Function to initialize the Rtc Engine, attach event listeners and actions
@@ -206,9 +194,6 @@ export default function VideoCall() {
   const sendLeaveNotifySocket = () => {
     socket.emit('onEndCall', {channelName: channelName});
   };
-  {
-    joinSucceed && sendJoinNotifySocket();
-  }
 
   /**
    * @name endCall
@@ -219,6 +204,18 @@ export default function VideoCall() {
     setPeerIds([]);
     setJoinSucced(false);
     setIsLoadingJoin(false);
+    // if (type === 'Doctor') {
+    //   navigation.navigate('PresCriptionStack', {
+    //     screen: 'Prescription',
+    //     params: {
+    //       patient: patient,
+    //       doctor: doctor,
+    //     },
+    //   });
+    // } else {
+
+    // }
+    navigation.goBack();
   };
 
   // {
@@ -275,18 +272,6 @@ export default function VideoCall() {
   const renderChannelNameView = () => {
     return (
       <>
-        <TextInput
-          style={{
-            width: '80%',
-            borderColor: 'gray',
-            borderWidth: 1,
-            textAlignVertical: 'top',
-          }}
-          value={tmpuid}
-          autoCorrect={false}
-          onChangeText={text => setTmpUid(text)}
-          multiline
-        />
         <Button title="Join" onPress={getAuthKey} />
       </>
     );

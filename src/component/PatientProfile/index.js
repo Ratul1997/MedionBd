@@ -21,15 +21,13 @@ export default function PatientProfile(props) {
   variables-
   navigation: navigation properties
   */
-  const {navigation} = props;
+  const {navigation, userDetails} = props;
   /**
    * @name: onClickForNavigate
    * @function: navigate To patientStack according to individual Item
    */
   const onClickForNavigate = navTo => () => {
-    navigation.navigate('PatientStack', {
-      screen: navTo,
-    });
+    navigation.navigate(navTo);
   };
 
   //rendering Items of PatientProfile Options
@@ -121,74 +119,21 @@ export default function PatientProfile(props) {
               color: COLORS.deepBlueHeader,
               fontWeight: 'bold',
             }}>
-            {PatientProfileData.name}
+            {userDetails.patient_name}
           </Text>
-          <Text>{PatientProfileData.name}</Text>
+          <Text>Gender: {userDetails.patient_gender}</Text>
+
+          <Text
+            style={{
+              fontSize: normalization(16),
+              color: COLORS.deepBlueHeader,
+            }}>
+            Age: {userDetails.patient_age}
+          </Text>
           <Text
             style={{fontSize: normalization(16), color: COLORS.deepBlueHeader}}>
-            {PatientProfileData.type}
+            Membership Id: {userDetails.userId}
           </Text>
-          <Text
-            style={{fontSize: normalization(16), color: COLORS.deepBlueHeader}}>
-            Membership Id: {PatientProfileData.membershipId}
-          </Text>
-          <TouchableOpacity
-            style={{
-              borderWidth: 0.5,
-              borderColor: COLORS.deepBlueHeader,
-              paddingVertical: normalization(10),
-              alignItems: 'center',
-              width: COLORS.Width * 0.85,
-              marginTop: normalization(10),
-              backgroundColor: '#D7E6FB',
-              borderRadius: 5,
-            }}>
-            <View
-              style={{
-                width: '85%',
-                backgroundColor: COLORS.white,
-                height: 5,
-                borderRadius: 10,
-                marginBottom: 5,
-              }}>
-              <View
-                style={{
-                  width: PatientProfileData.profileDone,
-                  height: '100%',
-                  backgroundColor: COLORS.deepBlueHeader,
-                  borderRadius: 10,
-                }}
-              />
-            </View>
-            <Text
-              style={{
-                fontSize: normalization(17),
-                color: COLORS.deepBlueHeader,
-                fontWeight: 'bold',
-              }}>
-              Complete your Profile: {PatientProfileData.profileDone} done
-            </Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={{
-              borderWidth: 0.5,
-              borderColor: COLORS.deepBlueHeader,
-              paddingVertical: normalization(10),
-              alignItems: 'center',
-              width: COLORS.Width * 0.85,
-              marginTop: normalization(10),
-              backgroundColor: '#D7E6FB',
-              borderRadius: 5,
-            }}>
-            <Text
-              style={{
-                fontSize: normalization(17),
-                color: COLORS.deepBlueHeader,
-                fontWeight: 'bold',
-              }}>
-              Upgrade to premium
-            </Text>
-          </TouchableOpacity>
         </View>
 
         <View

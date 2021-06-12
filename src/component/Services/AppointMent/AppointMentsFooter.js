@@ -26,10 +26,12 @@ export default function AppointMentsFooter(props) {
         elevation: 6,
         backgroundColor: COLORS.doctorListHeader,
         alignItems: 'center',
-        width: '100%',
-        borderTopStartRadius: 30,
-        borderTopEndRadius: 30,
+        width: '90%',
+        borderRadius: 30,
         padding: normalization(15),
+        justifyContent:'center',
+        alignSelf:'center',
+        marginVertical: normalization(10)
       }}>
       <Text style={{color: '#fff', fontSize: normalization(18)}}>{title}</Text>
     </TouchableOpacity>

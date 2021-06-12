@@ -16,9 +16,11 @@ import IonIcons from 'react-native-vector-icons/Ionicons';
 import ModalComponent from '../../../../common/ModalComponent';
 import CalenderContainer from '../../../Services/AppointMent/VideoCallAppointMent/CalenderContainer';
 import convertDate from '../../../../helpers/convertDate';
+import {convertStringToDate} from '../../../../constants/calcuationdata';
+import PatientItem from './PatientItem';
 
 export default function Patients(props) {
-  const {data} = props;
+  const {data, onStartCall, navigation} = props;
   /**
    * States-
    * modalVisible: for showing modal
@@ -50,58 +52,7 @@ export default function Patients(props) {
   };
   //render Patient List
   const renderItem = ({item, index}) => {
-    return (
-      <View
-        style={{
-          width: '90%',
-          height: normalization(80),
-          backgroundColor: COLORS.prescription_Notselected,
-          alignSelf: 'center',
-          marginVertical: normalization(5),
-          borderColor: COLORS.slideItemBorder, // if you need
-          borderWidth: 1,
-          overflow: 'hidden',
-          shadowColor: COLORS.slideItemBorder,
-          shadowRadius: 10,
-          shadowOpacity: 1,
-          borderRadius: 10,
-          padding: normalization(10),
-          flexDirection: 'row',
-        }}>
-        <View style={{width: '20%', alignSelf: 'center'}}>
-          <Image
-            source={item.image_path}
-            style={{
-              height: normalization(50),
-              width: normalization(50),
-              borderRadius: 30,
-            }}
-          />
-        </View>
-        <View style={{width: '80%', alignSelf: 'center'}}>
-          <Text style={{fontSize: normalization(15), fontWeight: 'bold'}}>
-            {item.patientName}
-          </Text>
-          <Text>{item.description}</Text>
-          <Text style={{fontSize: normalization(10)}}>Date: {item.date}</Text>
-          <Text style={{fontSize: normalization(10)}}>Time: {item.time}</Text>
-        </View>
-        {item.virtual_chamber && (
-          <TouchableOpacity
-            style={{
-              position: 'absolute',
-              backgroundColor: COLORS.Prescription_button,
-              right: 5,
-              bottom: 10,
-              padding: normalization(2),
-            }}>
-            <Text style={{color: 'white', fontSize: normalization(10)}}>
-              Virtual Chamber
-            </Text>
-          </TouchableOpacity>
-        )}
-      </View>
-    );
+    return <PatientItem item={item} index={index} navigation={navigation} />;
   };
   //render Main
   return (
@@ -111,15 +62,13 @@ export default function Patients(props) {
         modalVisible={modalVisible}>
         <CalenderContainer onDateChange={onDateChange} headerHide={true} />
       </ModalComponent>
+
       <View
         style={{
           flexDirection: 'row',
-          width: '100%',
-          overflow: 'hidden',
-          marginHorizontal: normalization(10),
-          marginVertical: normalization(10),
+          justifyContent: 'center',
+          alignItems: 'center',
         }}>
-        {/* Service Name */}
         <Text
           style={{
             fontSize: normalization(18),
@@ -129,20 +78,6 @@ export default function Patients(props) {
           }}>
           Sort By
         </Text>
-
-        {/* Straigth Line View */}
-        <View
-          style={{
-            alignSelf: 'center',
-            marginEnd: normalization(10),
-            borderWidth: 0.5,
-            borderColor: COLORS.black,
-            width: '76%',
-            height: 0,
-          }}
-        />
-      </View>
-      <View style={{flexDirection: 'row'}}>
         <View style={[styles.dateContainer]}>
           <Text> {date ? date : 'Select Date'} </Text>
           <IonIcons
@@ -152,14 +87,7 @@ export default function Patients(props) {
             onPress={onPressOpenModal}
           />
         </View>
-        <View style={[styles.dateContainer]}>
-          <Text> Select Time </Text>
-          <IonIcons
-            name="time"
-            size={normalization(16)}
-            color={COLORS.Prescription_button}
-          />
-        </View>
+
         <IonIcons
           name="search-circle"
           size={normalization(25)}
@@ -176,7 +104,7 @@ export default function Patients(props) {
       <FlatList
         data={data}
         renderItem={renderItem}
-        keyExtractor={item => item.id}
+        keyExtractor={item => item.idonlineappointment}
       />
     </View>
   );

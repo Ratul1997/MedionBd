@@ -41,7 +41,8 @@ const pieChartData = [
   },
 ];
 
-export default function Revenue() {
+export default function Revenue(props) {
+  const {navigation} = props;
   const chartConfig = {
     backgroundColor: 'white',
     backgroundGradientFrom: 'white',
@@ -65,9 +66,14 @@ export default function Revenue() {
     ...chartConfig.style,
     alignSelf: 'center',
   };
+
+  const onBackNavigate = () => {
+    navigation.goBack();
+  };
+
   return (
     <>
-      <AllPurposeHeader title="Statistics" />
+      <AllPurposeHeader title="Statistics" onBackNavigate={onBackNavigate} />
       <VirtualizedView>
         <LabelOfAComponent title="Patient Graph" />
         <BarChart

@@ -8,7 +8,6 @@ import {View, Text, TouchableOpacity, Dimensions, Image} from 'react-native';
 import COLORS from '../../../constants/COLORS';
 import normalization from '../../../constants/normalization';
 
-
 //width of screen 35%
 const itemWidth = Dimensions.get('window').width * 0.35;
 
@@ -26,7 +25,13 @@ const DataItem = ({item, navigation, screenName}) => {
         alignItems: 'center',
         justifyContent: 'center',
       }}
-      onPress={() => navigation.navigate(screenName)}>
+      onPress={() => {
+        if (screenName === 'DoctorList')
+          navigation.navigate(screenName, {
+            title: 'Offline',
+          });
+        else navigation.navigate(screenName);
+      }}>
       <Image
         style={{
           height: '70%',
