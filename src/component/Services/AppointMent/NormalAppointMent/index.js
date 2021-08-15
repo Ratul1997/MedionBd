@@ -45,7 +45,7 @@ function NormalAppointMent(props) {
     route,
   } = props;
 
-  const {item, title} = route.params;
+  const {item, title, virtualChamberId} = route.params;
   /**
    * States-
    * modalVisible: for showing modal
@@ -167,14 +167,18 @@ function NormalAppointMent(props) {
 
     const url = BASE_URL_FINAL + urlEnd;
     console.log(item);
+    const data = {
+      iddoctors: title === 'Online' ? item.idonlinedoctors : item.iddoctors,
+      idpatients: userDetails.userId,
+      preferredTime: preferredTime,
+      status: 1,
+      selectedDay: getSelectedDate(parseInt(selectedId)),
+    };
+    if (title === 'Online') {
+      data.virtualChamberId = virtualChamberId ? virtualChamberId : null;
+    }
     axios
-      .post(url, {
-        iddoctors: title === 'Online' ? item.idonlinedoctors : item.iddoctors,
-        idpatients: userDetails.userId,
-        preferredTime: preferredTime,
-        status: 1,
-        selectedDay: getSelectedDate(parseInt(selectedId)),
-      })
+      .post(url, {...data})
       .then(res => {
         setModalVisible(false);
         setIsLoading(false);
@@ -187,8 +191,6 @@ function NormalAppointMent(props) {
   };
 
   const onSelectedDays = value => () => {
-    console.log(value);
-
     setSelectedId(value);
   };
   const renderDay = ({item, index}) => {
@@ -231,6 +233,15 @@ function NormalAppointMent(props) {
       </ModalComponent>
       <ScrollView>
         <DoctorInformation accountInformation item={item} />
+        {virtualChamberId && (
+          <Text
+            style={{
+              textAlign: 'center',
+              fontSize: normalization(15),
+            }}>
+            Book Via By Virtual Chamber
+          </Text>
+        )}
         <PatientInformation
           patient_age={patient_age}
           patient_gender={patient_gender}

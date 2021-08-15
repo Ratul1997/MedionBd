@@ -17,6 +17,7 @@ import IonIcons from 'react-native-vector-icons/Ionicons';
 
 import RNFetchBlob from 'rn-fetch-blob';
 export default function UppCommingVOAppointMents(props) {
+  console.log('okok');
   /*
   Getting properties from navigation
 
@@ -39,6 +40,7 @@ export default function UppCommingVOAppointMents(props) {
       ? 'red'
       : COLORS.deepBlueHeader;
 
+    console.log(item);
     const download = () => {
       // Get today's date to add the time suffix in filename
 
@@ -126,7 +128,22 @@ export default function UppCommingVOAppointMents(props) {
               <Text>Time: {item.preferredTime}</Text>
               <Text>{item.chamber_name}</Text>
             </View>
+            {item.virtualChamberId && <Text>Via Virtual Chamber</Text>}
           </View>
+          <TouchableOpacity
+            style={{
+              position: 'absolute',
+              right: 10,
+              top: 10,
+              backgroundColor: COLORS.deepBlueHeader,
+              height: normalization(18),
+              width: normalization(18),
+              justifyContent: 'center',
+              alignItems: 'center',
+              borderRadius: 18,
+            }}>
+            <IonIcons name="cloud-upload" color="white" />
+          </TouchableOpacity>
           {getLink && (
             <TouchableOpacity
               style={{

@@ -27,9 +27,15 @@ const DataItem = ({item, navigation, screenName}) => {
       }}
       onPress={() => {
         if (screenName === 'DoctorList')
-          navigation.navigate(screenName, {
-            title: 'Offline',
-          });
+          if (item.type === 'Offline') {
+            navigation.navigate(screenName, {
+              title: 'Offline',
+            });
+          } else {
+            navigation.navigate(screenName, {
+              title: 'Online',
+            });
+          }
         else navigation.navigate(screenName);
       }}>
       <Image

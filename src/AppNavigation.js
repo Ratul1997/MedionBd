@@ -60,6 +60,7 @@ import OfflineAppointMents from './component/PatientProfile/History/OfflineAppoi
 import Answered from './component/HealthQuestions/Feed/Answered';
 import Approved from './component/HealthQuestions/Feed/Approved';
 import GoogleMap from './component/GoogleMap';
+import VirtualChamberSignUp from './component/Auth/VirtualChamberSignUp';
 
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -123,20 +124,6 @@ const MaterialTabNavigator = () => {
         }}
       />
       <MaterialTab.Screen
-        name="Doctor Chat"
-        component={Home}
-        options={{
-          tabBarLabel: 'Doctor Chat',
-          tabBarIcon: ({color}) => (
-            <Ionicons
-              name="md-chatbox"
-              size={normalization(22)}
-              color={color}
-            />
-          ),
-        }}
-      />
-      <MaterialTab.Screen
         name="Profile"
         component={PatientStack}
         options={{
@@ -193,6 +180,8 @@ const HomeStack = () => {
       />
       <Stack.Screen name="Confirmation" component={Confirmation} />
       <Stack.Screen name="DoctorList" component={DoctorList} />
+
+      <Drawer.Screen name="Virtual Chamber" component={VirtualChamberSignUp} />
       <Stack.Screen name="AskQuestion" component={AskQuestion} />
       <Stack.Screen name="Filter" component={Filter} />
       <Stack.Screen name="Feed" component={AnswerTab} />
@@ -203,6 +192,7 @@ const HomeStack = () => {
         component={HealthCheckUpDetails}
       />
 
+      <Stack.Screen name="GoogleMap" component={GoogleMap} />
       <Stack.Screen name="DoctorProf" component={DoctorProfile} />
     </Stack.Navigator>
   );
@@ -295,11 +285,10 @@ const DoctorLoginStack = () => {
 const DrawerNav = () => {
   return (
     <Drawer.Navigator
-      initialRouteName="Prescription"
+      initialRouteName="Home"
       drawerContent={props => <CustomDrawerContent {...props} />}>
       <Drawer.Screen name="Home" component={HomeStack} />
       <Drawer.Screen name="Blogs" component={BlogStack} />
-      <Drawer.Screen name="Google Map" component={GoogleMap} />
     </Drawer.Navigator>
   );
 };
